@@ -1,0 +1,12 @@
+{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "rvest.vs-code-prettier-eslint",
+    "intellsmi.comment-translate",
+    "EditorConfig.EditorConfig",
+    "mhutchie.git-graph",
+    "ms-vscode.sublime-keybindings",
+    "aaron-bond.better-comments"
+  ]
+}
