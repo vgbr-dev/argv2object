@@ -1,0 +1,117 @@
+{
+  "extends": [
+    "airbnb-base",
+    "prettier"
+  ],
+  "plugins": [
+    "jsdoc",
+    "import",
+    "prettier"
+  ],
+  "parser": "",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "env": {
+    "browser": false,
+    "commonjs": true,
+    "es2021": true,
+    "node":true
+  },
+  "settings": {
+    "jsdoc": {
+      "definedTags": ["hook", "component"],
+      "mode": "typescript"
+    }
+  },
+  "rules": {
+    // » GENERAL
+    "strict": [2,"global"],
+    "no-console": ["error", { "allow": ["warn", "error"] }],
+    "no-param-reassign": ["error", { "props": false }],
+    "import/no-dynamic-require": 0,
+    "import/no-extraneous-dependencies": [ "error", {
+      "devDependencies": [
+        "**/*.jsx",
+        "configurations/forge/makers/*.js",
+        "configurations/forge/publisher/*.js",
+        "tools/**/*.js",
+        "test/**/*.js",
+        "electron/main/index.js",
+        "electron/preload/index.js",
+        "electron/system/**/*.js",
+        "forge.config.js",
+        "vite.config.js"
+      ]}
+    ],
+    "import/no-unresolved": [2, { "ignore": ["^node:"] }],
+    // » PRETTIER
+    "prettier/prettier": ["error", {
+      "singleQuote": true,
+      "printWidth": 100,
+      "trailingComma": "all"
+    }],
+    // » JSDOC
+    "jsdoc/check-access": 1,
+    "jsdoc/check-alignment": 1,
+    "jsdoc/check-examples": [
+      "warn",{
+        "exampleCodeRegex":"```js\n([\\s\\S]*)```"
+    }],
+    "jsdoc/check-indentation": 1,
+    "jsdoc/check-line-alignment": ["error",
+      "always", {
+        "tags":["typedef", "property"],
+        "customSpacings": "postDelimiter"
+    }],
+    "import/extensions": [
+      "error",
+      "always",
+      {
+        "js": "never",
+        "jsx": "never",
+        ".mjs": "never"
+      }
+    ],
+    "jsdoc/check-param-names": 1,
+    "jsdoc/check-property-names": 1,
+    "jsdoc/check-syntax": 1,
+    "jsdoc/check-tag-names":["error", {
+      "definedTags": ["hook", "record"]
+    }],
+    "jsdoc/check-types": 1,
+    "jsdoc/check-values": 1,
+    "jsdoc/empty-tags": 1,
+    "jsdoc/implements-on-classes": 1,
+    "jsdoc/match-description": 1,
+    "jsdoc/newline-after-description": 1,
+    "jsdoc/no-bad-blocks": 1,
+    "jsdoc/no-defaults": 1,
+    "jsdoc/no-types": 0,
+    "jsdoc/no-undefined-types": 1,
+    "jsdoc/require-asterisk-prefix": 1,
+    "jsdoc/require-description": 1,
+    "jsdoc/require-description-complete-sentence": 1,
+    "jsdoc/require-example": 1,
+    "jsdoc/require-file-overview": 1,
+    "jsdoc/require-hyphen-before-param-description": 1,
+    "jsdoc/require-jsdoc": 1,
+    "jsdoc/require-param": 1,
+    "jsdoc/require-param-description": 1,
+    "jsdoc/require-param-name": 1,
+    "jsdoc/require-param-type": 1,
+    "jsdoc/require-property": 1,
+    "jsdoc/require-property-description": 1,
+    "jsdoc/require-property-name": 1,
+    "jsdoc/require-property-type": 1,
+    "jsdoc/require-returns": 1,
+    "jsdoc/require-returns-check": 1,
+    "jsdoc/require-returns-description": 1,
+    "jsdoc/require-returns-type": 1,
+    "jsdoc/require-throws": 1,
+    "jsdoc/require-yields": 1,
+    "jsdoc/require-yields-check": 1,
+    "jsdoc/valid-types": 1
+  }
+}
