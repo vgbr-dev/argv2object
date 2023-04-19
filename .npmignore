@@ -1,0 +1,120 @@
+# FILE VERSION 1.0.0
+
+# Ignore node_modules directory
+node_modules
+
+# Ignore lock files
+package-lock.json
+yarn.lock
+
+# Ignore
+# Logs files
+log/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Ignore IDE specific file
+.idea/
+.vscode/
+*.sw*
+
+# Ignore LICENSE files
+LICENSE
+LICENSE.md
+
+# Ignore .github directory
+.github
+
+# Ignore .husky directory
+.husky
+
+# Ignore huskyrc rule configurations file
+.huskyrc
+
+# git files
+.gitconfig
+.gitattributes
+.gitignore
+COMMIT_EDITMSG
+
+# next.js build output
+.next
+
+# Mac OS X Files
+.DS_Store
+
+# eslint files
+.eslintignore
+.eslintrc{,.json}
+
+# Optional eslint cache
+.eslintcache
+
+# prettier files
+.prettierignore
+.prettierrc{,.json}
+
+
+# lintstaged rule configurations file
+.lintstagedrc{,.json}
+
+# babel rule configurations file
+.babelrc{,.json}
+
+# stylelint rule configurations file
+.stylelintrc{,.json}
+
+# module configurations files
+ava.config.*
+commitlint.config.*
+jest.config.*
+webpack.config.*
+jsdoc.config.*
+
+# editor configurations file
+.editorconfig
+
+# gulp configurations file
+gulpfile.js
+
+# nodemon configurations file
+nodemon.json
+
+# Ignore docs files
+# ./docs/CHANGELOG.md
+# ./docs/CHANGES.md
+# ./docs/GITHUB.md
+# ./docs/NOTICE.md
+# ./docs/NOTES.md
+# ./docs/ICON.png
+
+# Ignore docs directory
+docs/
+# !docs/LOGO.png
+
+# Ignore test directory
+test/
+
+# ━━  WORKSPACE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# notes directory
+/notes/
+
+# development directory
+/development/
+
+# develop files
+/develop.js
+
+# Matches the files name:
+# <root>/develop-01.js
+# <root>/develop_01.js
+# <root>/develop.01.js
+/develop[-_.][0-9][0-9].js
+
+# Matches the files name:
+# <root>/dev.script.some.js
+# <root>/dev.script.somename.js
+/dev.script.*.js
+# ━━  PROJECT ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
