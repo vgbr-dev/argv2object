@@ -1,0 +1,60 @@
+# Set default behavior for text files
+* text=auto
+
+# API guardian patch must always use LF for tests to work
+*.patch eol=lf
+
+# JS TS and JSX files must always use LF for tools to work
+*.js  eol=lf
+*.ts  eol=lf
+*.jsx eol=lf
+
+# Set default behavior for binary files
+# Image files must always use binary for tools to work
+*.png   binary
+*.jpg   binary
+*.gif   binary
+*.jpeg  binary
+*.png   binary
+*.ico   binary
+*.icns  binary
+*.svg   binary
+
+# Image files must always use binary for tools to work
+*.pdf   binary
+*.doc   binary
+*.docx  binary
+*.xls   binary
+*.xlsx  binary
+
+# Treat files as text regardless of extension
+*.md      text
+*.txt     text
+*.nuspec  text
+*.ps1     text
+*.json    text
+*.xml     text
+*.yml     text
+*.yaml    text
+*.html    text
+*.css     text
+
+# Ignore whitespace when diffing certain files
+*.md  diff=markdown
+*.yml diff=yaml
+
+# Set line ending behavior
+*.md  eol=lf
+*.txt eol=lf
+*.sh  eol=lf
+
+# Set up merge drivers for certain file types
+*.docx  diff=astextxml
+*.xlsx  diff=astextxml
+
+
+# COMMON CONFIG FILES
+.gitignore      text
+.gitattributes  text
+.gitconfig      text
+.gitignore      text
