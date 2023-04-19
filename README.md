@@ -12,7 +12,7 @@ A utility function for converting command-line arguments to a key-value object.
   - [Unix-style command-line options](#unix-style-command-line-options)
 - [API](#api)
   - [Type Definitions](#type-definitions)
-  - [`argv2Object()`](#argv2object)
+  - [`argv2Object()`](#argv2object-1)
 - [Contributing](#contributing)
 - [License](#license)
 
