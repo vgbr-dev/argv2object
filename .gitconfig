@@ -1,0 +1,27 @@
+[user]
+  name = "Victor Giovanni Beltrán Rodríguez"
+  email = "vgbr.dev@gmail.com"
+
+[alias]
+  co = checkout
+  ci = commit
+  cim = commit -m
+  cimnv = commit --no-verify -m
+  st = status
+  br = branch
+  history = log --pretty=format:'%h %ad | %s%d [%an]' --graph --date=short
+
+[core]
+  editor = code --wait
+  autocrlf = input
+  whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
+
+[push]
+  default = simple
+
+[diff]
+  tool = vscode
+
+[merge]
+  tool = vscode
+  conflictstyle = diff3
