@@ -1,0 +1,49 @@
+# ━━  GENERAL ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# Dependency directories
+node_modules/
+jspm_packages/
+
+# docs
+/docs/**
+
+# testing
+/coverage/**
+
+# production
+/build/**
+/dist/**
+
+# JsDoc Files
+/jsdoc/**
+
+# Matches directory <root>/templates/
+/templates/**
+
+# Test
+/tests/bench/**
+/tests/fixtures/**
+/tests/performance/**
+
+# Misc
+/tmp/**
+reports/
+/.pnp
+.pnp.js
+**/serviceWorker.js
+!.eslintrc
+
+# ━━  WORKSPACE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# Notes
+/notes/**
+
+# Development
+/development/**
+
+# Matches the files name <root>/develop.js
+/develop.js
+
+# Matches the files name:
+# <root>/develop-01.js
+# <root>/develop_01.js
+# <root>/develop.01.js
+/develop[-_.][0-9][0-9].js
