@@ -28,7 +28,7 @@
     "jsdoc.config.json": true,
     "package-lock.json": true,
     "yarn.lock": true,
-    // "README.md": true,
+    "README.md": false,
     "vite.config.js": true
     /**/
   },
