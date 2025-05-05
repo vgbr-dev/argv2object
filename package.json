@@ -43,7 +43,6 @@
   "main": "index.js",
   "scripts": {
     "test": "cross-env NODE_ENV=test node --test test/",
-    "develop": "node --watch develop.js",
     "lint": "npx eslint",
     "prepare": "husky install",
     "prepublish": "npm test"
