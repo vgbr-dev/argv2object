@@ -37,6 +37,10 @@
   "license": "MIT",
   "type": "module",
   "main": "index.js",
+  "imports": {
+    "#constants": "./src/constants.mjs",
+    "#functions": "./src/functions.mjs"
+  },
   "scripts": {
     "test": "cross-env NODE_ENV=test node --watch --test test/*.test.mjs",
     "lint": "npx eslint",
