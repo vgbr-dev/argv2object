@@ -42,7 +42,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "cross-env NODE_ENV=test node --test test/",
+    "test": "cross-env NODE_ENV=test node --watch --test test/*.test.mjs",
     "lint": "npx eslint",
     "prepare": "husky install",
     "prepublish": "npm test"
