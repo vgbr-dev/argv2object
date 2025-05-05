@@ -4,13 +4,15 @@
   "private": false,
   "description": "A utility function for converting command-line arguments to a key-value object.",
   "keywords": [
-    "command-line",
     "arguments",
-    "object",
+    "command-line",
     "conversion",
     "key-value",
-    "unix-style",
-    "parse"
+    "nodejs",
+    "object",
+    "parse",
+    "process.argv",
+    "unix-style"
   ],
   "directories": {
     "doc": "docs",
