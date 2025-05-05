@@ -5,11 +5,11 @@
 
 // ━━ IMPORT MODULES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // » IMPORT NATIVE NODE MODULES
-const { describe, it, afterEach, beforeEach } = require('node:test');
-const assert = require('node:assert');
+import { describe, it, afterEach, beforeEach } from 'node:test';
+import assert from 'node:assert';
 
 // » IMPORT MODULES
-const argv2Object = require('..');
+import argv2Object from '../src/argv2Object.mjs';
 
 // ━━ CONSTANTS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 /**
