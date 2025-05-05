@@ -14,10 +14,6 @@
     "process.argv",
     "unix-style"
   ],
-  "directories": {
-    "doc": "docs",
-    "test": "test"
-  },
   "homepage": "https://github.com/vgbr-dev/argv2object#readme",
   "bugs": {
     "url": "https://github.com/vgbr-dev/argv2object/issues"
