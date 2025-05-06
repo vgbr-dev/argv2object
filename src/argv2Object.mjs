@@ -102,6 +102,10 @@ const ERRORS = {
  * ```
  */
 const argv2Object = (unixmode = false) => {
+  if (typeof unixmode !== 'boolean') {
+    throw new TypeError(ERRORS.INVALID_UNIXMODE_TYPE);
+  }
+
   const regexp = unixmode ? REGEXPS.UNIXMODE : REGEXPS.SIMPLE;
 
   const args = process.argv.slice(2);
