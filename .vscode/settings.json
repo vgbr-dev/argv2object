@@ -20,7 +20,7 @@
     ".npmignore": true,
     ".prettierignore": true,
     ".prettierrc{,.json}": true,
-    "commitlint.config.js": true,
+    "commitlint.config{,.js,.mjs}": true,
     "forge.config.js": true,
     ".stylelintrc": true,
     "LICENSE": true,
