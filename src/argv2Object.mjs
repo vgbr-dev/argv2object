@@ -70,7 +70,7 @@ const REGEXPS = {
  * @type {Errors}
  */
 const ERRORS = {
-  NO_ARGS: 'No arguments added',
+  NO_ARGUMENTS: 'No arguments added',
   NO_MATCH_SIMPLE: `Some argument(s) do not follow the 'key=value' format.`,
   NO_MATCH_UNIXMODE: `Some argument(s) do not follow the Unix-style command-line format.`,
 };
