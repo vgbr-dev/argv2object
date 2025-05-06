@@ -37,6 +37,9 @@
   "license": "MIT",
   "type": "module",
   "main": "index.mjs",
+  "exports": {
+    ".": "./index.mjs"
+  },
   "imports": {
     "#argv2Object": "./src/argv2Object.mjs",
     "#constants": "./src/constants.mjs",
