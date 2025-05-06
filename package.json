@@ -36,7 +36,7 @@
   ],
   "license": "MIT",
   "type": "module",
-  "main": "index.js",
+  "main": "index.mjs",
   "imports": {
     "#argv2Object": "./src/argv2Object.mjs",
     "#constants": "./src/constants.mjs",
@@ -49,8 +49,8 @@
     "prepublish": "npm test"
   },
   "devDependencies": {
-    "@commitlint/cli": "^17.6.1",
-    "@commitlint/config-conventional": "^17.6.1",
+    "@commitlint/cli": "^19.8.0",
+    "@commitlint/config-conventional": "^19.8.0",
     "cross-env": "^7.0.3",
     "eslint": "^8.42.0",
     "eslint-config-airbnb-base": "^15.0.0",
