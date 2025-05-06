@@ -38,6 +38,7 @@
   "type": "module",
   "main": "index.js",
   "imports": {
+    "#argv2Object": "./src/argv2Object.mjs",
     "#constants": "./src/constants.mjs",
     "#functions": "./src/functions.mjs"
   },
