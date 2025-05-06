@@ -110,7 +110,7 @@ const argv2Object = (unixmode = false) => {
 
   const argumentsv = process.argv.slice(2);
   if (argumentsv.length === 0) {
-    throw new Error(ERRORS.NO_ARGS);
+    throw new Error(ERRORS.NO_ARGUMENTS);
   }
 
   if (!argumentsv.every(arg => regexp.test(arg))) {
