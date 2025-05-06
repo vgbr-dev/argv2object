@@ -117,18 +117,14 @@ const argv2Object = (unixmode = false) => {
     throw new Error(unixmode ? ERRORS.NO_MATCH_UNIXMODE : ERRORS.NO_MATCH_SIMPLE);
   }
 
-  return [...argumentsv]
-    .map(arg => {
-      const [k, v] = arg.split('=');
-      const key = k.replace(/^-{1,2}/, '').replace(/-/g, '_');
-      const value = v === undefined ? true : v;
-      return [key, value];
-    })
-    .reduce((acc, arg) => {
-      const [key, value] = arg;
-      acc[key] = value;
-      return acc;
-    }, {});
+  const entries = [...argumentsv].map(argumentv => {
+    const [k, v] = argumentv.split('=');
+    const key = k.replace(/^-{1,2}/, '').replace(/-/g, '_');
+    const value = v === undefined ? true : v;
+    return [key, value];
+  });
+
+  return Object.fromEntries(entries);
 };
 
 // ━━ EXPORT MODULE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
