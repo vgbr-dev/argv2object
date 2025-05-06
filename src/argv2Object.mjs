@@ -108,16 +108,16 @@ const argv2Object = (unixmode = false) => {
 
   const regexp = unixmode ? REGEXPS.UNIXMODE : REGEXPS.SIMPLE;
 
-  const args = process.argv.slice(2);
-  if (args.length === 0) {
+  const argumentsv = process.argv.slice(2);
+  if (argumentsv.length === 0) {
     throw new Error(ERRORS.NO_ARGS);
   }
 
-  if (!args.every(arg => regexp.test(arg))) {
+  if (!argumentsv.every(arg => regexp.test(arg))) {
     throw new Error(unixmode ? ERRORS.NO_MATCH_UNIXMODE : ERRORS.NO_MATCH_SIMPLE);
   }
 
-  return [...args]
+  return [...argumentsv]
     .map(arg => {
       const [k, v] = arg.split('=');
       const key = k.replace(/^-{1,2}/, '').replace(/-/g, '_');
