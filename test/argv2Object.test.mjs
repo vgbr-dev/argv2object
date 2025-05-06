@@ -65,7 +65,7 @@ describe('argv2Object', () => {
     assert.throws(() => argv2Object(), THROWS.NO_ARGS);
   });
 
-  it('should throw an error when an argument does not match the expected format', () => {
+  it('should throw an "Error" when an argument does not match the expected format', () => {
     Object.assign(process.argv, {
       2: '-task',
       3: 'invalid-arg',
@@ -73,7 +73,7 @@ describe('argv2Object', () => {
     assert.throws(() => argv2Object(), THROWS.NO_MATCH_SIMPLE);
   });
 
-  it('should throw an error when a Unix-style argument does not match the expected format', () => {
+  it('should throw an "Error" when a Unix-style argument does not match the expected format', () => {
     Object.assign(process.argv, {
       2: 'task',
       3: 'invalid-arg',
