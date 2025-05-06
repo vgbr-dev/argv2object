@@ -70,6 +70,7 @@ const REGEXPS = {
  * @type {Errors}
  */
 const ERRORS = {
+  INVALID_UNIXMODE_TYPE: 'The "unixmode" value must be a boolean type',
   NO_ARGUMENTS: 'No arguments added',
   NO_MATCH_SIMPLE: `Some argument(s) do not follow the 'key=value' format.`,
   NO_MATCH_UNIXMODE: `Some argument(s) do not follow the Unix-style command-line format.`,
