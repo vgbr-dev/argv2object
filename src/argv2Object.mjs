@@ -106,8 +106,6 @@ const argv2Object = (unixmode = false) => {
     throw new TypeError(THROWS_ERRORS_MESSAGES.INVALID_UNIXMODE_TYPE);
   }
 
-  const regexp = unixmode ? REGEXPS.UNIXMODE : REGEXPS.SIMPLE;
-
   const argumentsv = process.argv.slice(2);
   if (argumentsv.length === 0) {
     throw new Error(THROWS_ERRORS_MESSAGES.NO_ARGUMENTS);
