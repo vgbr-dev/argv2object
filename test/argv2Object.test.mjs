@@ -37,7 +37,7 @@ const THROWS = {
 // ━━ CONSTANTS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
 // ━━ TEST ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-describe('CryptoDriver', () => {
+describe('argv2Object', () => {
   const original = process.argv;
 
   beforeEach(() => {
