@@ -69,7 +69,7 @@ const REGEXPS = {
  * @private
  * @type {Errors}
  */
-const ERRORS = {
+const THROWS_ERRORS_MESSAGES = {
   INVALID_UNIXMODE_TYPE: 'The "unixmode" value must be a boolean type',
   NO_ARGUMENTS: 'No arguments added',
   NO_MATCH_SIMPLE: `Some argument(s) do not follow the 'key=value' format.`,
@@ -103,18 +103,23 @@ const ERRORS = {
  */
 const argv2Object = (unixmode = false) => {
   if (typeof unixmode !== 'boolean') {
-    throw new TypeError(ERRORS.INVALID_UNIXMODE_TYPE);
+    throw new TypeError(THROWS_ERRORS_MESSAGES.INVALID_UNIXMODE_TYPE);
   }
 
   const regexp = unixmode ? REGEXPS.UNIXMODE : REGEXPS.SIMPLE;
 
   const argumentsv = process.argv.slice(2);
   if (argumentsv.length === 0) {
-    throw new Error(ERRORS.NO_ARGUMENTS);
+    throw new Error(THROWS_ERRORS_MESSAGES.NO_ARGUMENTS);
   }
 
-  if (!argumentsv.every(arg => regexp.test(arg))) {
-    throw new Error(unixmode ? ERRORS.NO_MATCH_UNIXMODE : ERRORS.NO_MATCH_SIMPLE);
+  const regexp = unixmode ? REGEXPS.UNIXMODE : REGEXPS.SIMPLE;
+
+  if (!argumentsv.every(argumentv => regexp.test(argumentv))) {
+    const message = unixmode
+      ? THROWS_ERRORS_MESSAGES.NO_MATCH_UNIXMODE
+      : THROWS_ERRORS_MESSAGES.NO_MATCH_SIMPLE;
+    throw new Error(message);
   }
 
   const entries = [...argumentsv].map(argumentv => {
