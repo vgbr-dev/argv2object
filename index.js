@@ -17,7 +17,7 @@
  * @author Victor Giovanni Beltrán Rodríguez
  * @module argv2Object
  */
-const argv2Object = require('./src');
+import argv2Object from '#argv2Object';
 
 // ━━ EXPORT MODULE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-module.exports = argv2Object;
+export default argv2Object;
