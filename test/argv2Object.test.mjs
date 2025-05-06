@@ -20,7 +20,11 @@ import argv2Object from '../src/argv2Object.mjs';
  * @constant {object} THROWS
  */
 const THROWS = {
-  NO_ARGS: {
+  INVALID_UNIXMODE_TYPE: {
+    name: 'TypeError',
+    message: 'The "unixmode" value must be a boolean type',
+  },
+  NO_ARGUMENTS: {
     name: 'Error',
     message: 'No arguments added',
   },
@@ -48,7 +52,15 @@ describe('argv2Object', () => {
     process.argv = original;
   });
 
-  it('should throw an error when no arguments are provided', () => {
+  it('should throw an "TypeError" when "unixmode" is not a boolean type', () => {
+    Object.assign(process.argv, {
+      2: 'task',
+      3: 'invalid-arg',
+    });
+    assert.throws(() => argv2Object(12), THROWS.INVALID_UNIXMODE_TYPE);
+  });
+
+  it('should throw an "Error" when no arguments are provided', () => {
     process.argv = ['node', 'script.js'];
     assert.throws(() => argv2Object(), THROWS.NO_ARGS);
   });
