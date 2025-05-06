@@ -127,4 +127,4 @@ const argv2Object = (unixmode = false) => {
 };
 
 // ━━ EXPORT MODULE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-module.exports = argv2Object;
+export default argv2Object;
