@@ -10,8 +10,7 @@
  * arguments: simple key-value pairs (e.g. "key=value") and Unix-style
  * command-line arguments (e.g. "-k value" or "--key=value").
  *
- * @author Victor Giovanni Beltrán Rodríguez
- * @version 1.0.0
+ * @version 1.1.0
  *
  * @example
  *  Simple key-value pairs
