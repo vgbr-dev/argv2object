@@ -30,55 +30,11 @@ import { formatKey, convertValue } from '#functions';
 
 // ━━ TYPE DEFINITIONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 /**
- * Regular expressions used to validate command-line arguments.
- *
- * @private
- * @typedef  {object} Regexps
- * @property {RegExp} UNIXMODE - Regular expression for validating Unix-style command-line arguments.
- * @property {RegExp} SIMPLE   - Regular expression for validating simple key-value arguments.
- */
-
-/**
- * Error messages used in case of invalid command-line arguments.
- *
- * @private
- * @typedef  {object} Errors
- * @property {string} NO_ARGS           - Error message for when no arguments are provided.
- * @property {string} NO_MATCH_SIMPLE   - Error message for when one or more simple key-value arguments do not follow the expected format.
- * @property {string} NO_MATCH_UNIXMODE - Error message for when one or more Unix-style command-line arguments do not follow the expected format.
- */
-
-/**
  * An `Object` with keys and values corresponding to the provided arguments.
  *
  * @typedef  {object}         ArgvObject
  * @property {string|boolean} [key=value] - The key-value pairs in the provided arguments.
  */
-
-// ━━ CONSTANTS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-/**
- * Regular expressions used to validate command-line arguments.
- *
- * @private
- * @type {Regexps}
- */
-const REGEXPS = {
-  UNIXMODE: /^-[a-z]{1}|-[a-z]{1}=.*$|--[a-zA-Z]+|--[a-zA-Z]+(?:-[a-zA-Z]+)*=.*$/,
-  SIMPLE: /^[a-zA-Z]+(?:-[a-zA-Z]+)*=.*$/,
-};
-
-/**
- * Error messages used in case of invalid command-line arguments.
- *
- * @private
- * @type {Errors}
- */
-const THROWS_ERRORS_MESSAGES = {
-  INVALID_UNIXMODE_TYPE: 'The "unixmode" value must be a boolean type',
-  NO_ARGUMENTS: 'No arguments added',
-  NO_MATCH_SIMPLE: `Some argument(s) do not follow the 'key=value' format.`,
-  NO_MATCH_UNIXMODE: `Some argument(s) do not follow the Unix-style command-line format.`,
-};
 
 // ━━ MODULE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 /**
