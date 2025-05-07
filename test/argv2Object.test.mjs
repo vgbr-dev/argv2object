@@ -9,7 +9,7 @@ import { describe, it, afterEach, beforeEach } from 'node:test';
 import assert from 'node:assert';
 
 // » IMPORT MODULES
-import argv2Object from '../src/argv2Object.mjs';
+import argv2Object from '#argv2Object';
 
 // ━━ CONSTANTS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 /**
@@ -19,22 +19,22 @@ import argv2Object from '../src/argv2Object.mjs';
  * @private
  * @constant {object} THROWS
  */
-const THROWS = {
+const THROWS_ERRORS_MESSAGES = {
   INVALID_UNIXMODE_TYPE: {
     name: 'TypeError',
-    message: 'The "unixmode" value must be a boolean type',
+    message: 'The "unixmode" parameter must be a boolean value',
   },
   NO_ARGUMENTS: {
     name: 'Error',
-    message: 'No arguments added',
+    message: 'No command-line arguments were provided',
   },
   NO_MATCH_SIMPLE: {
     name: 'Error',
-    message: `Some argument(s) do not follow the 'key=value' format.`,
+    message: `Arguments must follow "key=value" format`,
   },
   NO_MATCH_UNIXMODE: {
     name: 'Error',
-    message: `Some argument(s) do not follow the Unix-style command-line format.`,
+    message: `Arguments must follow Unix-style format (-a, --option=value)`,
   },
 };
 
@@ -55,12 +55,12 @@ describe('argv2Object', () => {
       2: 'task',
       3: 'invalid-arg',
     });
-    assert.throws(() => argv2Object(12), THROWS.INVALID_UNIXMODE_TYPE);
+    assert.throws(() => argv2Object(12), THROWS_ERRORS_MESSAGES.INVALID_UNIXMODE_TYPE);
   });
 
   it('should throw an "Error" when no arguments are provided', () => {
     process.argv = ['node', 'script.js'];
-    assert.throws(() => argv2Object(), THROWS.NO_ARGS);
+    assert.throws(() => argv2Object(), THROWS_ERRORS_MESSAGES.NO_ARGS);
   });
 
   it('should throw an "Error" when an argument does not match the expected format', () => {
@@ -68,7 +68,7 @@ describe('argv2Object', () => {
       2: '-task',
       3: 'invalid-arg',
     });
-    assert.throws(() => argv2Object(), THROWS.NO_MATCH_SIMPLE);
+    assert.throws(() => argv2Object(), THROWS_ERRORS_MESSAGES.NO_MATCH_SIMPLE);
   });
 
   it('should throw an "Error" when a Unix-style argument does not match the expected format', () => {
@@ -76,7 +76,7 @@ describe('argv2Object', () => {
       2: 'task',
       3: 'invalid-arg',
     });
-    assert.throws(() => argv2Object(true), THROWS.NO_MATCH_UNIXMODE);
+    assert.throws(() => argv2Object(true), THROWS_ERRORS_MESSAGES.NO_MATCH_UNIXMODE);
   });
 
   it('should convert simple key-value pairs to an object', () => {
@@ -86,16 +86,17 @@ describe('argv2Object', () => {
       4: 'level=0',
     });
     const result = argv2Object();
-    assert.deepStrictEqual(result, { name: 'John', age: '30', level: '0' });
+    assert.deepStrictEqual(result, { name: 'John', age: 30, level: 0 });
   });
 
   it('should convert Unix-style options to an object', () => {
     Object.assign(process.argv, {
-      2: '-a',
-      3: '--name=John',
-      4: '--is-admin',
+      2: '-h',
+      3: '-help',
+      4: '--name=John',
+      5: '--is-admin',
     });
     const result = argv2Object(true);
-    assert.deepStrictEqual(result, { a: true, name: 'John', is_admin: true });
+    assert.deepStrictEqual(result, { h: true, help: true, name: 'John', is_admin: true });
   });
 });
