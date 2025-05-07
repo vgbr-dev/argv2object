@@ -38,7 +38,8 @@
   "type": "module",
   "main": "index.mjs",
   "exports": {
-    ".": "./index.mjs"
+    "import": "./index.mjs",
+    "require": "./index.cjs"
   },
   "imports": {
     "#argv2Object": "./src/argv2Object.mjs",
