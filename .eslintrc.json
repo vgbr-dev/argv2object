@@ -4,7 +4,6 @@
     "prettier"
   ],
   "plugins": [
-    "jsdoc",
     "import",
     "prettier"
   ],
@@ -20,15 +19,7 @@
     "node":true
   },
   "settings": {
-    "jsdoc": {
-      "definedTags": ["hook", "component"],
-      "mode": "typescript"
-    },
-    "import/resolver": {
-      "node": {
-        "extensions": [".js", ".mjs", "cjs"]
-      }
-    }
+    "import/resolver": "node"
   },
   "rules": {
     // » GENERAL
@@ -50,14 +41,15 @@
         "vite.config.js"
       ]}
     ],
-    "import/no-unresolved": [2, { "ignore": ["^node:"] }],
+    "import/no-unresolved": [0, { "ignore": ["^node:"] }],
     "import/extensions": [
       "error",
       "always",
       {
         "js": "never",
         "jsx": "never",
-        ".mjs": "never"
+        "mjs": "never",
+        "cjs": "never"
       }
     ],
     // » PRETTIER
