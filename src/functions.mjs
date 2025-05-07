@@ -1,7 +1,12 @@
 /**
- * @file TODO ADD SHORT MODULE DESCRIPTION.
+ * @file Module containing utility functions for argument processing.
+ *
+ * Provides formatting and type conversion functions used internally
+ * by the argv2object library to normalize and transform command-line
+ * arguments into consistent JavaScript data structures.
  *
  * @module Functions
+ * @since 1.0.0
  */
 
 // ━━ MODULE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
