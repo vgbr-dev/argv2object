@@ -7,6 +7,7 @@ A utility function for converting command-line arguments to a key-value object.
 - [Installation](#installation)
 - [Importing](#importing)
 - [Usage](#usage)
+- [Dual Module Support](#dual-module-support)
 - [Examples](#examples)
   - [Simple key-value pairs](#simple-key-value-pairs)
   - [Unix-style command-line options](#unix-style-command-line-options)
@@ -61,34 +62,49 @@ console.log(args.name); // "John"
 
 ```
 
+## Dual Module Support
+
+This package supports both:
+
+- ES Modules: `import argv2object from 'argv2object'`
+- CommonJS: `const argv2object = require('argv2object')`
+
+The architecture uses separate entry points while sharing the same implementation.
+
+## System Requirements
+
+- **Node.js 14+** (Recommended for full support)
+- **Node.js 12.x** (Experimental support)
+- **Versiones anteriores**: Use version 1.x of this package
+
 ## Examples
 
 ### Simple key-value pairs
 
 ```sh
 # Command line input:
-node script.js task=some-task name=John level=admin
+node script.js task=some-task age=30 name=John level=admin
 
 ```
 
 ```js
 const args = argv2Object();
 console.log(args);
-// Output: { name: 'John', age: '30', level: 'admin' }
+// Output: { name: 'John', age: 30, level: 'admin' }
 ```
 
 ### Unix-style command-line options
 
 ```sh
 # Command line input:
-node --watch script.js -h --name=John --is-admin
+node --watch script.js -h --help --name=John --is-admin
 
 ```
 
 ```js
 const args = argv2Object(true);
 console.log(args);
-// Output: { h: true, name: 'John', is_admin: true }
+// Output: { h: true, help: true, name: 'John', is_admin: true }
 ```
 
 ## API
@@ -113,11 +129,12 @@ Returns an `Object` with keys and values corresponding to the provided arguments
 
 Throws
 
-| Type    | Description                                                                                 |
-|---------|---------------------------------------------------------------------------------------------|
-| `Error` | If no arguments are provided from command line.                                             |
-| `Error` | If `unixmode` is `true` and an argument does not follow the Unix-style command-line format. |
-| `Error` | If `unixmode` is `false` and an argument does not follow the "key=value" format.            |
+| Type    | Description                                                                                     |
+|---------|-------------------------------------------------------------------------------------------------|
+| `TypeError` | If `unixmode` is not of type `boolean`.                                                     |
+| `Error`     | If no arguments are provided from command line.                                             |
+| `Error`     | If `unixmode` is `true` and an argument does not follow the Unix-style command-line format. |
+| `Error`     | If `unixmode` is `false` and an argument does not follow the "key=value" format.            |
 
 ## Contributing
 
