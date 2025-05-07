@@ -23,6 +23,10 @@
  * Command line input: node script.js -h --name=John --is-admin
  * Output: { h: true, name: 'John', is_admin: true }
  */
+// ━━ IMPORT MODULES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// » IMPORT LOCAL MODULES
+import { REGEXPS, THROWS_ERRORS_MESSAGES } from '#constants';
+import { formatKey, convertValue } from '#functions';
 
 // ━━ TYPE DEFINITIONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 /**
