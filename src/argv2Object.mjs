@@ -82,8 +82,8 @@ const argv2Object = (unixmode = false) => {
 
   const entries = [...argumentsv].map(argumentv => {
     const [k, v] = argumentv.split('=');
-    const key = k.replace(/^-{1,2}/, '').replace(/-/g, '_');
-    const value = v === undefined ? true : v;
+    const key = formatKey(k, 'snakecase');
+    const value = convertValue(v);
     return [key, value];
   });
 
