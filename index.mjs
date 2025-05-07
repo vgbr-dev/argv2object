@@ -1,22 +1,22 @@
 /**
- * @author Victor Giovanni Beltrán Rodríguez
- * @file Manages main entry point.
+ * @file Entry point for ES Module consumers.
+ *
+ * Provides the default export of argv2object functionality
+ * for modern JavaScript environments using ES Modules.
+ *
+ * This file re-exports the main functionality from the
+ * implementation module while maintaining ESM compatibility.
+ *
+ * @module argv2object/esm
+ * @see module:argv2Object
+ * @since 1.1.0
+ * @example
+ * // ESM Usage
+ * import argv2object from 'argv2object';
  */
 
-// ━━ TYPE DEFINITIONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-/**
- * The `argv2Object()` function, converts command-line arguments to a key-value
- * object.
- *
- * This function takes an array of command-line arguments and converts them to a
- * JavaScript object with keys and values based on the provided argument format.
- * The format can be either simple key-value pairs (e.g. "key=value") or
- * Unix-style command-line options (e.g. "-o --option=value").
- *
- * @version 1.0.0
- * @author Victor Giovanni Beltrán Rodríguez
- * @module argv2Object
- */
+// ━━ IMPORT MODULES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// » IMPORT LOCAL MODULES
 import argv2Object from '#argv2Object';
 
 // ━━ EXPORT MODULE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
