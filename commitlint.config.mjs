@@ -29,11 +29,7 @@ const commitlintConfiguration = {
     'footer-max-line-length': [2, 'always', 100],
     'type-case': [2, 'always', 'lower-case'],
     'type-empty': [2, 'never'],
-    'subject-case': [
-      2,
-      'never',
-      ['sentence-case', 'start-case', 'pascal-case', 'upper-case']
-    ],
+    'subject-case': [2, 'never', ['sentence-case', 'start-case', 'pascal-case', 'upper-case']],
     'subject-empty': [2, 'never'],
     'body-leading-blank': [2, 'always'],
     'footer-leading-blank': [2, 'always'],
