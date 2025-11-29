@@ -9,20 +9,35 @@
     ".github": true,
     "node_modules": true,
     /* » FILES */
+
     ".editorconfig": true,
-    ".eslintrc{,.json}": true,
+    // » Eslint File Settings
+    ".eslintrc{,.json,.js,.cjs,.yaml,.yml}": true,
+    "eslint.config{,.js,.mjs,.cjs,.ts,.mts,.cts}": true,
     ".eslintignore": true,
+    // » Git File Settings
     ".gitattributes": true,
     ".gitconfig": true,
     ".gitignore": true,
+
     ".huskyrc": true,
+
+    // » Lint-staged File Settings
     ".lintstagedrc{,.json}": true,
+    "lint-staged.config{.js,.mjs,.cjs,.ts,.mts,.cts}": true,
     ".npmignore": true,
+    // » Prettier File Settings
     ".prettierignore": true,
-    ".prettierrc{,.json}": true,
-    "commitlint.config{,.js,.mjs}": true,
+    ".prettierrc{,.toml,.cts,.cjs,.mts,.mjs,.ts,.js,.json,.yml,.yaml,.json5}": true,
+    "prettier.config{,.js,.ts,.mjs,.mts,.cjs,.cts}": true,
+
+    // » Commitlint File Settings
+    ".commitlintrc{,.json,.yaml,.yml,.js,.cjs,.mjs,.ts,.cts}": true,
+    "commitlint.config{.js,.cjs,.mjs,.ts,.cts}": true,
     "forge.config.js": true,
-    ".stylelintrc": true,
+
+    // » Stylelint File Settings
+    ".stylelintrc{,.js,.mjs,.cjs,.yml,.yaml,.json}": true,
     "LICENSE": true,
     "LICENSE.md": true,
     "jsdoc.config.json": true,
@@ -53,22 +68,27 @@
     "editor.renderWhitespace": "all",
     "editor.acceptSuggestionOnEnter": "smart",
     "editor.parameterHints.enabled": true,
+    "editor.snippetSuggestions": "inline",
     "editor.quickSuggestions": {
       "comments": "inline",
       "strings": "inline",
       "other": "inline"
     },
-    "editor.snippetSuggestions": "inline"
   },
+
+  // » Editor Settings
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "editor.tabSize": 2,
   "editor.formatOnSave": false,
-  "javascript.validate.enable": false,
-  "commentTranslate.targetLanguage": "en",
-  "commentTranslate.multiLineMerge": true,
+  "editor.renderWhitespace": "none",
+
+  // » ESLint (optimal configuration)
   "eslint.enable": true,
   "eslint.run": "onType",
   "eslint.options": {
-    "overrideConfigFile": ".eslintrc.json"
-  }
+    "overrideConfigFile": "eslint.config.mjs"
+  },
+  "javascript.validate.enable": false,
+  "commentTranslate.targetLanguage": "en",
+  "commentTranslate.multiLineMerge": true,
 }
