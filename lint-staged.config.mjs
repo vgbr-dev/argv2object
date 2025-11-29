@@ -1,5 +1,5 @@
 /**
- * @file lint-staged Configuration for Git Hooks.
+ * @file The lint-staged Configuration for Git Hooks.
  *
  * @description Configuration for lint-staged, a tool that runs linters on git
  * staged files. Define commands to automatically format and validate code
@@ -31,7 +31,6 @@ const CONCURRENT = true;
  */
 const VERBOSE = true;
 
-
 // ━━ MODULE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 /**
  * Prettier settings for the project.
@@ -42,28 +41,18 @@ const VERBOSE = true;
 const lintStagedConfiguration = {
   concurrent: CONCURRENT,
   verbose: VERBOSE,
-    rules: {
+  rules: {
     // JavaScript/TypeScript files
-    '**/*.{js,mjs,cjs,ts,tsx}': [
-      'eslint',
-      'prettier',
-    ],
+    '**/*.{js,mjs,cjs,ts,tsx}': ['eslint', 'prettier'],
 
     // JSON and configuration files
-    '**/*.{json,md,yml,yaml}': [
-      'prettier',
-    ],
+    '**/*.{json,md,yml,yaml}': ['prettier'],
 
     // Style files (CSS, SCSS, etc.)
-    '**/*.{css,scss,sass,less}': [
-      'stylelint',
-      'prettier',
-    ],
+    '**/*.{css,scss,sass,less}': ['stylelint', 'prettier'],
 
     // HTML and template files
-    '**/*.html': [
-      'prettier',
-    ],
+    '**/*.html': ['prettier'],
   },
 };
 
