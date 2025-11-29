@@ -8,12 +8,12 @@
     ".husky": true,
     ".github": true,
     "node_modules": true,
-    /* » FILES */
+    /* » FILES *
 
     ".editorconfig": true,
     // » Eslint File Settings
     ".eslintrc{,.json,.js,.cjs,.yaml,.yml}": true,
-    "eslint.config{,.js,.mjs,.cjs,.ts,.mts,.cts}": true,
+    // "eslint.config{,.js,.mjs,.cjs,.ts,.mts,.cts}": true,
     ".eslintignore": true,
     // » Git File Settings
     ".gitattributes": true,
