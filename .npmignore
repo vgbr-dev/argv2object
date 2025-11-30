@@ -48,6 +48,7 @@ COMMIT_EDITMSG
 # eslint files
 .eslintignore
 .eslintrc{,.json}
+eslint.config{,.js,.mjs,.cjs,.ts,.mts,.cts}
 
 # Optional eslint cache
 .eslintcache
@@ -55,10 +56,12 @@ COMMIT_EDITMSG
 # prettier files
 .prettierignore
 .prettierrc{,.json}
+prettier.config.mjs
 
 
 # lintstaged rule configurations file
 .lintstagedrc{,.json}
+lint-staged.config.mjs
 
 # babel rule configurations file
 .babelrc{,.json}
@@ -72,6 +75,7 @@ commitlint.config.*
 jest.config.*
 webpack.config.*
 jsdoc.config.*
+jsconfig.json
 
 # editor configurations file
 .editorconfig
