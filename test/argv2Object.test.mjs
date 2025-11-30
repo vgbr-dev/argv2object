@@ -92,7 +92,7 @@ describe('argv2Object', () => {
   it('should convert Unix-style options to an object', () => {
     Object.assign(process.argv, {
       2: '-h',
-      3: '-help',
+      3: '--help',
       4: '--name=John',
       5: '--is-admin',
     });
