@@ -17,17 +17,17 @@
  *
  * Supports:
  *
- * - camelCase conversion (--some-flag → someFlag)
- * - snake_case conversion (--some-flag → some_flag)
- * - No conversion (--some-flag → some-flag)
+ * - camelCase conversion (--some-flag → someFlag).
+ * - snake_case conversion (--some-flag → some_flag).
+ * - No conversion (--some-flag → some-flag).
  *
  * @exports
  * @private
  * @function formatKey
- * @param {string} key - The raw key from command-line arguments
- * @param {'camelcase'|'snakecase'} [mode] - Target formatting mode
- * @returns {string} Normalized and formatted key
- * @throws {TypeError} If key is not a string
+ * @param {string} key - The raw key from command-line arguments.
+ * @param {'camelcase'|'snakecase'} [mode] - Target formatting mode.
+ * @returns {string} Normalized and formatted key.
+ * @throws {TypeError} If key is not a string.
  * @example
  * ```js
  * formatKey('--output-format', 'camelcase') // returns 'outputFormat'
@@ -57,16 +57,16 @@ const formatKey = (key, mode) => {
  *
  * Performs automatic conversion of:
  *
- * - 'true'/'false' strings → boolean
- * - Numeric strings → number
- * - undefined values → true (for flag arguments)
- * - All other values remain as strings
+ * - 'true'/'false' strings → boolean.
+ * - Numeric strings → number.
+ * - undefined values → true (for flag arguments).
+ * - All other values remain as strings.
  *
  * @exports
  * @private
  * @function convertValue
- * @param {string} [value] - The value to convert
- * @returns {string|boolean|number} Converted value
+ * @param {string} [value] - The value to convert.
+ * @returns {string|boolean|number} Converted value.
  * @example
  * ```js
  * convertValue('true') // returns true
