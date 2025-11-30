@@ -24,7 +24,7 @@
  */
 // ━━ IMPORT MODULES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // » IMPORT LOCAL MODULES
-import { REGEXPS, THROWS_ERRORS_MESSAGES } from '#constants';
+import { REGEXPS, ERROR_MESSAGES } from '#constants';
 import { formatKey, convertValue } from '#functions';
 
 // ━━ TYPE DEFINITIONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -63,20 +63,18 @@ import { formatKey, convertValue } from '#functions';
  */
 const argv2Object = (unixmode = false) => {
   if (typeof unixmode !== 'boolean') {
-    throw new TypeError(THROWS_ERRORS_MESSAGES.INVALID_UNIXMODE_TYPE);
+    throw new TypeError(ERROR_MESSAGES.INVALID_UNIXMODE_TYPE);
   }
 
   const argumentsv = process.argv.slice(2);
   if (argumentsv.length === 0) {
-    throw new Error(THROWS_ERRORS_MESSAGES.NO_ARGUMENTS);
+    throw new Error(ERROR_MESSAGES.NO_ARGUMENTS);
   }
 
   const regexp = unixmode ? REGEXPS.UNIXMODE : REGEXPS.SIMPLE;
 
   if (!argumentsv.every(argumentv => regexp.test(argumentv))) {
-    const message = unixmode
-      ? THROWS_ERRORS_MESSAGES.NO_MATCH_UNIXMODE
-      : THROWS_ERRORS_MESSAGES.NO_MATCH_SIMPLE;
+    const message = unixmode ? ERROR_MESSAGES.NO_MATCH_UNIXMODE : ERROR_MESSAGES.NO_MATCH_SIMPLE;
     throw new Error(message);
   }
 
