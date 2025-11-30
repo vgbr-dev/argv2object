@@ -83,6 +83,36 @@ const convertValue = value => {
   return value;
 };
 
+/**
+ * Creates an object from command line arguments by parsing key-value pairs.
+ *
+ * @param {string[]} argumentsv - Array of command line arguments to process.
+ * @param {'camelcase'|'snakecase'} mode - Target formatting mode.
+ * @returns {object} Object with parsed keys and converted values.
+ * @throws {Error} When arguments cannot be parsed into valid key-value pairs.
+ *
+ * @example
+ * ```js
+ * // Simple mode: key=value pairs
+ * createObjectFromArguments(['name=John', 'age=30'], 'snakecase');
+ * // Returns: { name: 'John', age: 30 }
+ *
+ * // Unix mode: flags and options
+ * createObjectFromArguments(['--name=John', '-a'], 'snakecase');
+ * // Returns: { name: 'John', a: true }
+ * ```
+ */
+const createObjectFromArguments = (argumentsv, mode) => {
+  const entries = [...argumentsv].map(argumentv => {
+    const [k, v] = argumentv.split('=');
+    const key = formatKey(k, mode);
+    const value = convertValue(v);
+    return [key, value];
+  });
+
+  return Object.fromEntries(entries);
+};
+
 // ━━ EXPORT MODULE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 /**
  * Utility functions for argument processing.
@@ -91,4 +121,4 @@ const convertValue = value => {
  * @property {Function} formatKey    - Key formatting/normalization function.
  * @property {Function} convertValue - Value type conversion function.
  */
-export { formatKey, convertValue };
+export { formatKey, convertValue, createObjectFromArguments };
