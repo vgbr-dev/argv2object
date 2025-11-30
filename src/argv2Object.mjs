@@ -46,7 +46,7 @@ import { formatKey, convertValue } from '#functions';
  * Unix-style command-line options (e.g. "-o --option=value").
  *
  * @function
- * @param {boolean} [unixmode=false] - Whether to parse Unix-style command-line options, the default value is `false`.
+ * @param {boolean} [unixmode] - Whether to parse Unix-style command-line options, the default value is `false`.
  * @returns {ArgvObject} Returns an object with keys and values corresponding to the provided arguments.
  * @throws {TypeError} If `unixmode` is not is not of type `boolean`.
  * @throws {Error} If no arguments are provided from command line.
