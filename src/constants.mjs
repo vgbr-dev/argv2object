@@ -12,14 +12,6 @@
 
 // ━━ TYPE DEFINITIONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 /**
- * Patterns for Unix-style command line arguments.
- *
- * @typedef  {object} UNIXPatterns
- * @property {RegExp} SHORT        - Matches short Unix flags: `-a`, `-v`, `-f=value`.
- * @property {RegExp} LONG         - Matches long Unix flags: `--help`, `--output=json`.
- */
-
-/**
  * Type definition for command line argument patterns.
  *
  * @typedef  {object} CommandLinePatterns
@@ -86,10 +78,8 @@
  * ```
  */
 const COMMAND_LINE_PATTERNS = {
-  UNIXMODE: {
-    SHORT: /^-[a-zA-Z](=.*)?$/,
-    LONG: /^--[a-zA-Z][a-zA-Z0-9-]*(=.*)?$/,
-  },
+  UNIX_SHORT: /^-[a-zA-Z](=.*)?$/,
+  UNIX_LONG: /^--[a-zA-Z][a-zA-Z0-9-]*(=.*)?$/,
   SIMPLE: /^[a-zA-Z]+(?:-[a-zA-Z]+)*=.*$/,
 };
 
