@@ -84,8 +84,11 @@
  * COMMAND_LINE_PATTERNS.SIMPLE.test('output')               // false
  * ```
  */
-const REGEXPS = {
-  UNIXMODE: /^-[a-z]{1}|-[a-z]{1}=.*$|--[a-zA-Z]+|--[a-zA-Z]+(?:-[a-zA-Z]+)*=.*$/,
+const COMMAND_LINE_PATTERNS = {
+  UNIXMODE: {
+    SHORT: /^-[a-zA-Z](=.*)?$/,
+    LONG: /^--[a-zA-Z][a-zA-Z0-9-]*(=.*)?$/,
+  },
   SIMPLE: /^[a-zA-Z]+(?:-[a-zA-Z]+)*=.*$/,
 };
 
@@ -118,4 +121,4 @@ const ERROR_MESSAGES = {
  * @property {CommandLinePatterns} REGEXPS                - Validation patterns.
  * @property {ErrorMessages}       THROWS_ERRORS_MESSAGES - Standard error messages.
  */
-export { REGEXPS, ERROR_MESSAGES };
+export { COMMAND_LINE_PATTERNS, ERROR_MESSAGES };
