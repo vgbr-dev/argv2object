@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "module": "esnext",
+    "target": "esnext",
+    "moduleResolution": "node",
+    "baseUrl": ".",
+    "paths": {
+      "#argv2Object": ["./src/argv2Object.mjs"],
+      "#constants": ["./src/constants.mjs"],
+      "#functions": ["./src/functions.mjs"],
+    },
+  }
+}
