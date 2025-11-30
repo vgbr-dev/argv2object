@@ -29,9 +29,11 @@
  * @returns {string} Normalized and formatted key
  * @throws {TypeError} If key is not a string
  * @example
+ * ```js
  * formatKey('--output-format', 'camelcase') // returns 'outputFormat'
  * formatKey('-v', 'snakecase') // returns 'v' (no underscores needed)
  * formatKey('--enable-logging') // returns 'enable-logging'
+ * ```
  */
 const formatKey = (key, mode) => {
   if (typeof key !== 'string') {
@@ -66,10 +68,12 @@ const formatKey = (key, mode) => {
  * @param {string} [value] - The value to convert
  * @returns {string|boolean|number} Converted value
  * @example
+ * ```js
  * convertValue('true') // returns true
  * convertValue('42') // returns 42
  * convertValue() // returns true (for flag arguments)
  * convertValue('text') // returns 'text'
+ * ```
  */
 const convertValue = value => {
   if (value === undefined) return true;
