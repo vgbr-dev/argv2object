@@ -12,11 +12,19 @@
 
 // ━━ TYPE DEFINITIONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 /**
- * Regular expression patterns for argument validation.
+ * Patterns for Unix-style command line arguments.
  *
- * @typedef  {object} Regexps
- * @property {RegExp} UNIXMODE - Pattern for Unix-style arguments (-a, --arg=value).
- * @property {RegExp} SIMPLE   - Pattern for simple key=value arguments.
+ * @typedef  {object} UNIXPatterns
+ * @property {RegExp} SHORT        - Matches short Unix flags: `-a`, `-v`, `-f=value`.
+ * @property {RegExp} LONG         - Matches long Unix flags: `--help`, `--output=json`.
+ */
+
+/**
+ * Type definition for command line argument patterns.
+ *
+ * @typedef  {object}       CommandLinePatterns
+ * @property {UNIXPatterns} UNIXMODE            - Pattern for Unix-style arguments.
+ * @property {RegExp}       SIMPLE              - Pattern for simple key=value arguments: key=value, multi-part-key=value.
  */
 
 /**
@@ -31,24 +39,49 @@
 
 // ━━ MODULE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 /**
- * Regular expressions for validating different argument formats.
+ * Regular expression patterns for validating command line argument formats.
+ *
+ * Provides comprehensive pattern matching for different command line argument
+ * styles commonly used in Node.js applications and CLI tools.
  *
  * @exports
  * @private
- * @constant REGEXPS
- * @type {Regexps}
+ * @constant COMMAND_LINE_PATTERNS
+ * @type {CommandLinePatterns}
+ *
  * @example
  * ```js
- * // Unix-style pattern matches:
- * // -a, -b=value, --flag, --option=value
- * REGEXPS.UNIXMODE.test('--output=json') // true
+ * // Valid short flags:
+ * COMMAND_LINE_PATTERNS.UNIXMODE.SHORT.test('-h')    // true
+ * COMMAND_LINE_PATTERNS.UNIXMODE.SHORT.test('-v')    // true
+ * COMMAND_LINE_PATTERNS.UNIXMODE.SHORT.test('-f=json') // true
+ *
+ * // Invalid short flags:
+ * COMMAND_LINE_PATTERNS.UNIXMODE.SHORT.test('--help') // false
+ * COMMAND_LINE_PATTERNS.UNIXMODE.SHORT.test('-abc')   // false
  * ```
  *
  * @example
  * ```js
- * // Simple pattern matches:
- * // key=value, multi-part-key=value
- * REGEXPS.SIMPLE.test('output_format=json') // true
+ * // Valid long flags:
+ * COMMAND_LINE_PATTERNS.UNIXMODE.LONG.test('--help')        // true
+ * COMMAND_LINE_PATTERNS.UNIXMODE.LONG.test('--output=json') // true
+ * COMMAND_LINE_PATTERNS.UNIXMODE.LONG.test('--dry-run')     // true
+ *
+ * // Invalid long flags:
+ * COMMAND_LINE_PATTERNS.UNIXMODE.LONG.test('-h')           // false
+ * COMMAND_LINE_PATTERNS.UNIXMODE.LONG.test('--123')        // false
+ * ```
+ *
+ * @example
+ * ```js
+ * // Valid simple arguments:
+ * COMMAND_LINE_PATTERNS.SIMPLE.test('output=json')          // true
+ * COMMAND_LINE_PATTERNS.SIMPLE.test('config-file=settings') // true
+ *
+ * // Invalid simple arguments:
+ * COMMAND_LINE_PATTERNS.SIMPLE.test('--output=json')        // false
+ * COMMAND_LINE_PATTERNS.SIMPLE.test('output')               // false
  * ```
  */
 const REGEXPS = {
@@ -82,7 +115,7 @@ const ERROR_MESSAGES = {
  * Exported constants for argument validation.
  *
  * @type {object}
- * @property {Regexps}       REGEXPS                - Validation patterns.
- * @property {ErrorMessages} THROWS_ERRORS_MESSAGES - Standard error messages.
+ * @property {CommandLinePatterns} REGEXPS                - Validation patterns.
+ * @property {ErrorMessages}       THROWS_ERRORS_MESSAGES - Standard error messages.
  */
 export { REGEXPS, ERROR_MESSAGES };
