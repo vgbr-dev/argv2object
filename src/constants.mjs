@@ -38,14 +38,18 @@
  * @constant REGEXPS
  * @type {Regexps}
  * @example
+ * ```js
  * // Unix-style pattern matches:
  * // -a, -b=value, --flag, --option=value
  * REGEXPS.UNIXMODE.test('--output=json') // true
+ * ```
  *
  * @example
+ * ```js
  * // Simple pattern matches:
  * // key=value, multi-part-key=value
  * REGEXPS.SIMPLE.test('output_format=json') // true
+ * ```
  */
 const REGEXPS = {
   UNIXMODE: /^-[a-z]{1}|-[a-z]{1}=.*$|--[a-zA-Z]+|--[a-zA-Z]+(?:-[a-zA-Z]+)*=.*$/,
@@ -60,9 +64,11 @@ const REGEXPS = {
  * @constant THROWS_ERRORS_MESSAGES
  * @type {ErrorMessages}
  * @example
+ * ```js
  * // Error cases:
- * throw new Error(THROWS_ERRORS_MESSAGES.INVALID_UNIXMODE_TYPE);
- * throw new Error(THROWS_ERRORS_MESSAGES.NO_ARGUMENTS);
+ * throw new Error(ERROR_MESSAGES.INVALID_UNIXMODE_TYPE);
+ * throw new Error(ERROR_MESSAGES.NO_ARGUMENTS);
+ * ```
  */
 const THROWS_ERRORS_MESSAGES = {
   INVALID_UNIXMODE_TYPE: 'The "unixmode" parameter must be a boolean value',
