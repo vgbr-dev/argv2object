@@ -16,21 +16,6 @@
  * @typedef {import('lint-staged').Configuration} LintStagedConfigurationOptions
  */
 
-// ━━ CONSTANTS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-/**
- * Run tasks concurrently for better performance.
- *
- * @constant CONCURRENT
- */
-const CONCURRENT = true;
-
-/**
- * Enable verbose output for debugging purposes.
- *
- * @constant VERBOSE
- */
-const VERBOSE = true;
-
 // ━━ MODULE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 /**
  * Prettier settings for the project.
@@ -39,21 +24,17 @@ const VERBOSE = true;
  * @type {LintStagedConfigurationOptions}
  */
 const lintStagedConfiguration = {
-  concurrent: CONCURRENT,
-  verbose: VERBOSE,
-  rules: {
-    // JavaScript/TypeScript files
-    '**/*.{js,mjs,cjs,ts,tsx}': ['eslint', 'prettier'],
+  // JavaScript/TypeScript files
+  '**/*.{js,mjs,cjs,ts,tsx}': ['eslint', 'prettier'],
 
-    // JSON and configuration files
-    '**/*.{json,md,yml,yaml}': ['prettier'],
+  // JSON and configuration files
+  '**/*.{json,md,yml,yaml}': ['prettier'],
 
-    // Style files (CSS, SCSS, etc.)
-    '**/*.{css,scss,sass,less}': ['stylelint', 'prettier'],
+  // Style files (CSS, SCSS, etc.)
+  '**/*.{css,scss,sass,less}': ['stylelint', 'prettier'],
 
-    // HTML and template files
-    '**/*.html': ['prettier'],
-  },
+  // HTML and template files
+  '**/*.html': ['prettier'],
 };
 
 // ━━ EXPORT MODULE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
