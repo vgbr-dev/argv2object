@@ -8,12 +8,12 @@
     ".husky": true,
     ".github": true,
     "node_modules": true,
-    /* » FILES *
+    /* » FILES */
 
     ".editorconfig": true,
     // » Eslint File Settings
     ".eslintrc{,.json,.js,.cjs,.yaml,.yml}": true,
-    // "eslint.config{,.js,.mjs,.cjs,.ts,.mts,.cts}": true,
+    "eslint.config{,.js,.mjs,.cjs,.ts,.mts,.cts}": true,
     ".eslintignore": true,
     // » Git File Settings
     ".gitattributes": true,
@@ -40,6 +40,7 @@
     ".stylelintrc{,.js,.mjs,.cjs,.yml,.yaml,.json}": true,
     "LICENSE": true,
     "LICENSE.md": true,
+    "jsconfig.json": true,
     "jsdoc.config.json": true,
     "package-lock.json": true,
     "yarn.lock": true,
