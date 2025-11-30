@@ -25,8 +25,8 @@
  * @typedef  {object} ErrorMessages
  * @property {string} INVALID_UNIXMODE_TYPE - When unixmode parameter is not boolean.
  * @property {string} NO_ARGUMENTS          - When no arguments are provided.
- * @property {string} NO_MATCH_SIMPLE       - When simple args don't match key=value format
- * @property {string} NO_MATCH_UNIXMODE     - When args don't match Unix-style format
+ * @property {string} NO_MATCH_SIMPLE       - When simple args don't match key=value format.
+ * @property {string} NO_MATCH_UNIXMODE     - When args don't match Unix-style format.
  */
 
 // ━━ MODULE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
