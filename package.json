@@ -49,7 +49,7 @@
   "scripts": {
     "test": "cross-env NODE_ENV=test node --test test/*.test.mjs",
     "lint": "npx eslint . --ext .mjs --ext .js --ext .cjs",
-    "prepare": "husky install",
+    "prepare": "husky",
     "prepublish": "npm test"
   },
   "devDependencies": {
