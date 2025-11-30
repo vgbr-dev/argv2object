@@ -70,7 +70,7 @@ const REGEXPS = {
  * throw new Error(ERROR_MESSAGES.NO_ARGUMENTS);
  * ```
  */
-const THROWS_ERRORS_MESSAGES = {
+const ERROR_MESSAGES = {
   INVALID_UNIXMODE_TYPE: 'The "unixmode" parameter must be a boolean value',
   NO_ARGUMENTS: 'No command-line arguments were provided',
   NO_MATCH_SIMPLE: 'Arguments must follow "key=value" format',
@@ -85,4 +85,4 @@ const THROWS_ERRORS_MESSAGES = {
  * @property {Regexps}       REGEXPS                - Validation patterns.
  * @property {ErrorMessages} THROWS_ERRORS_MESSAGES - Standard error messages.
  */
-export { REGEXPS, THROWS_ERRORS_MESSAGES };
+export { REGEXPS, ERROR_MESSAGES };
