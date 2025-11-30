@@ -22,9 +22,10 @@
 /**
  * Type definition for command line argument patterns.
  *
- * @typedef  {object}       CommandLinePatterns
- * @property {UNIXPatterns} UNIXMODE            - Pattern for Unix-style arguments.
- * @property {RegExp}       SIMPLE              - Pattern for simple key=value arguments: key=value, multi-part-key=value.
+ * @typedef  {object} CommandLinePatterns
+ * @property {RegExp} UNIX_SHORT          - Matches short Unix flags: `-a`, `-v`, `-f=value`.
+ * @property {RegExp} UNIX_LONG           - Matches long Unix flags: `--help`, `--output=json`.
+ * @property {RegExp} SIMPLE              - Pattern for simple key=value arguments: key=value, multi-part-key=value.
  */
 
 /**
@@ -52,25 +53,25 @@
  * @example
  * ```js
  * // Valid short flags:
- * COMMAND_LINE_PATTERNS.UNIXMODE.SHORT.test('-h')    // true
- * COMMAND_LINE_PATTERNS.UNIXMODE.SHORT.test('-v')    // true
- * COMMAND_LINE_PATTERNS.UNIXMODE.SHORT.test('-f=json') // true
+ * COMMAND_LINE_PATTERNS.UNIX_SHORT.test('-h')    // true
+ * COMMAND_LINE_PATTERNS.UNIX_SHORT.test('-v')    // true
+ * COMMAND_LINE_PATTERNS.UNIX_SHORT.test('-f=json') // true
  *
  * // Invalid short flags:
- * COMMAND_LINE_PATTERNS.UNIXMODE.SHORT.test('--help') // false
- * COMMAND_LINE_PATTERNS.UNIXMODE.SHORT.test('-abc')   // false
+ * COMMAND_LINE_PATTERNS.UNIX_SHORT.test('--help') // false
+ * COMMAND_LINE_PATTERNS.UNIX_SHORT.test('-abc')   // false
  * ```
  *
  * @example
  * ```js
  * // Valid long flags:
- * COMMAND_LINE_PATTERNS.UNIXMODE.LONG.test('--help')        // true
- * COMMAND_LINE_PATTERNS.UNIXMODE.LONG.test('--output=json') // true
- * COMMAND_LINE_PATTERNS.UNIXMODE.LONG.test('--dry-run')     // true
+ * COMMAND_LINE_PATTERNS.UNIX_LONG.test('--help')        // true
+ * COMMAND_LINE_PATTERNS.UNIX_LONG.test('--output=json') // true
+ * COMMAND_LINE_PATTERNS.UNIX_LONG.test('--dry-run')     // true
  *
  * // Invalid long flags:
- * COMMAND_LINE_PATTERNS.UNIXMODE.LONG.test('-h')           // false
- * COMMAND_LINE_PATTERNS.UNIXMODE.LONG.test('--123')        // false
+ * COMMAND_LINE_PATTERNS.UNIX_LONG.test('-h')           // false
+ * COMMAND_LINE_PATTERNS.UNIX_LONG.test('--123')        // false
  * ```
  *
  * @example
