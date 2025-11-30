@@ -25,7 +25,7 @@
 // ━━ IMPORT MODULES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // » IMPORT LOCAL MODULES
 import { COMMAND_LINE_PATTERNS, ERROR_MESSAGES } from '#constants';
-import { formatKey, convertValue } from '#functions';
+import { createObjectFromArguments } from '#functions';
 
 // ━━ TYPE DEFINITIONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 /**
@@ -82,14 +82,7 @@ const argv2Object = (unixmode = false) => {
     throw new Error(message);
   }
 
-  const entries = [...argumentsv].map(argumentv => {
-    const [k, v] = argumentv.split('=');
-    const key = formatKey(k, 'snakecase');
-    const value = convertValue(v);
-    return [key, value];
-  });
-
-  return Object.fromEntries(entries);
+  return createObjectFromArguments(argumentsv, 'snakecase');
 };
 
 // ━━ EXPORT MODULE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
