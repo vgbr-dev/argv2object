@@ -24,7 +24,7 @@
  */
 // ━━ IMPORT MODULES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // » IMPORT LOCAL MODULES
-import { REGEXPS, ERROR_MESSAGES } from '#constants';
+import { COMMAND_LINE_PATTERNS, ERROR_MESSAGES } from '#constants';
 import { formatKey, convertValue } from '#functions';
 
 // ━━ TYPE DEFINITIONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
