@@ -71,9 +71,13 @@ const argv2Object = (unixmode = false) => {
     throw new Error(ERROR_MESSAGES.NO_ARGUMENTS);
   }
 
-  const regexp = unixmode ? REGEXPS.UNIXMODE : REGEXPS.SIMPLE;
+  const patterns = unixmode
+    ? [COMMAND_LINE_PATTERNS.UNIX_LONG, COMMAND_LINE_PATTERNS.UNIX_SHORT]
+    : [COMMAND_LINE_PATTERNS.SIMPLE];
 
-  if (!argumentsv.every(argumentv => regexp.test(argumentv))) {
+  const isValid = argumentsv.every(argument => patterns.some(pattern => pattern.test(argument)));
+
+  if (!isValid) {
     const message = unixmode ? ERROR_MESSAGES.NO_MATCH_UNIXMODE : ERROR_MESSAGES.NO_MATCH_SIMPLE;
     throw new Error(message);
   }
