@@ -56,9 +56,9 @@ import { formatKey, convertValue } from '#functions';
  * ```js
  * // Command line input: node script.js --task=some-task --execute=true
  *
- * const args = argv2Object();
- * console.log(args.task); // prints 'some-task'
- * console.log(args.execute); // prints 'true'
+ * const argumentsv = argv2Object();
+ * console.log(argumentsv.task); // prints 'some-task'
+ * console.log(argumentsv.execute); // prints true
  * ```
  */
 const argv2Object = (unixmode = false) => {
