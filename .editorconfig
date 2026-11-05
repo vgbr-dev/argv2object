@@ -1,37 +1,34 @@
-# top-most EditorConfig file
+# @file EditorConfig Configuration for File Formatting.
+#
+# @see https://editorconfig.org/
+# @version 1.0.0
+
+# top-most EditorConfig file.
 root = true
 
-# Unix-style newlines with a newline ending every file
+# Default settings for all files.
 [*]
 charset = utf-8
 end_of_line = lf
 insert_final_newline = true
 trim_trailing_whitespace = true
-
-[*]
 indent_style = space
 indent_size = 2
-tab_width = 2
 
-# Matches the exact files either .md or .markdown
-[*.txt]
+# Overwrite the default settings: Use tabs if necessary.
+# Matches the exact files either .txt
+# Matches the exact files either .html
+[*.{txt,html}]
 indent_style = tab
-indent_size = 2
 tab_width = 2
 
-# Matches the exact files either package.json or .travis.yml
-[{ package.json, .travis.yml }]
-indent_style = space
-indent_size = 2
-
+# Overwrite the default settings: Do not trim trailing spaces.
 # Matches the exact files either .md or .markdown
-[*.{ md, markdown }]
-indent_style = space
-indent_size = 2
+[*.{md,markdown}]
 trim_trailing_whitespace = false
 
-# Matches the exact files either .html
-[*.html]
-indent_style = tab
+# Matches the exact files either .yml
+# Matches the exact files either .yaml
+[*.{yml,yaml}]
+indent_style = space
 indent_size = 2
-tab_width = 2

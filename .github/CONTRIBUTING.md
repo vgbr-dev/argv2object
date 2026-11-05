@@ -1,74 +1,149 @@
 # Contributing
 
-## Request for changes/ Pull Requests
+Thank you for taking the time to contribute.
 
-You first need to create a fork of the [crypto-driver](https://github.com/vgbr-dev/crypto-driver/) repository to commit your changes to it. Methods to fork a repository can be found in the [GitHub Documentation](https://docs.github.com/en/get-started/quickstart/fork-a-repo).
+## Repository Configuration
 
-Then add your fork as a local project:
+The following values identify the repository. Update this section when reusing this document in another project.
+
+| Property | Value |
+|--:-----------------|--:----------------------------------------|
+| **Repository** | `argv2object` |
+| **Owner** | `vgbr-dev` |
+| **Default branch** | `main` |
+| **Repository URL** | `https://github.com/vgbr-dev/argv2object` |
+
+---
+
+## Request for Changes / Pull Requests
+
+Before making changes, create a fork of the repository on GitHub.
+
+You can find instructions for forking a repository in the [GitHub Documentation](https://docs.github.com/en/get-started/quickstart/fork-a-repo).
+
+### Clone your fork
+
+Clone your fork to your local machine:
 
 ```sh
 # Using HTTPS
-git clone https://github.com/vgbr-dev/crypto-driver.git
+git clone https://github.com/YOUR-USERNAME/REPOSITORY.git
 
 # Using SSH
-git clone git@github.com:vgbr-dev/crypto-driver.git
+git clone git@github.com:YOUR-USERNAME/REPOSITORY.git
 ```
 
-> [Which remote URL should be used ?](https://docs.github.com/en/get-started/getting-started-with-git/about-remote-repositories)
+For more information about choosing between HTTPS and SSH, see the [GitHub Documentation](https://docs.github.com/en/get-started/getting-started-with-git/about-remote-repositories).
 
-Then, go to your local folder
+Then enter the repository directory:
 
 ```sh
-cd crypto-driver
+cd REPOSITORY
 ```
 
-Add git remote controls :
+### Configure Git remotes
+
+Add your fork as `fork` and the original repository as `upstream`:
 
 ```sh
 # Using HTTPS
-git remote add fork https://github.com/YOUR-USERNAME/crypto-driver.git
-git remote add upstream https://github.com/vgbr-dev/crypto-driver.git
-
+git remote add fork https://github.com/YOUR-USERNAME/REPOSITORY.git
+git remote add upstream https://github.com/OWNER/REPOSITORY.git
 
 # Using SSH
-git remote add fork git@github.com:YOUR-USERNAME/crypto-driver.git
-git remote add upstream git@github.com/vgbr-dev/crypto-driver.git
+git remote add fork git@github.com:YOUR-USERNAME/REPOSITORY.git
+git remote add upstream git@github.com:OWNER/REPOSITORY.git
 ```
 
-You can now verify that you have your two git remotes:
+Verify the configured remotes:
 
 ```sh
 git remote -v
 ```
 
-## Receive remote updates
+You should have two remotes:
 
-In view of staying up to date with the central repository :
+```text
+fork
+upstream
+```
+
+---
+
+## Receive Remote Updates
+
+Before starting new work, make sure your local repository is synchronized with the upstream repository:
 
 ```sh
+git switch main
 git pull upstream main
 ```
 
-## Choose a base branch
+---
 
-Before starting development, you need to know which branch to base your modifications/additions on. When in doubt, use main.
+## Choose a Base Branch
 
-| Type of change    | Branches              |
-|:------------------|----------------------:|
-| Documentation     | `main`                |
-| Bug fixes         | `main`                |
-| New features      | `main`                |
-| New issues models | `YOUR-USERNAME:patch` |
+Unless otherwise specified, all changes should be based on the default branch.
+
+| Type of change | Base branch |
+| :------------- | :---------- |
+| Documentation  | `main`      |
+| Bug fixes      | `main`      |
+| New features   | `main`      |
+| Refactoring    | `main`      |
+| Tests          | `main`      |
+
+Create a dedicated branch for your changes:
 
 ```sh
-# Switch to the desired branch
 git switch main
+git pull upstream main
 
-# Pull down any upstream changes
-git pull
-
-# Create a new branch to work on
 git switch --create patch/1234-name-issue
 ```
 
-Commit your changes, then push the branch to your fork with `git push -u fork` and open a pull request on [the crypto-driver repository](https://github.com/vgbr-dev/crypto-driver/) following the template provided.
+Use a descriptive branch name that identifies the purpose of the change.
+
+Examples:
+
+```text
+feature/add-request-timeout
+patch/fix-url-parser
+docs/update-installation
+test/add-client-tests
+refactor/simplify-exchange
+```
+
+---
+
+## Commit and Push Your Changes
+
+Commit your changes using a clear and descriptive commit message:
+
+```sh
+git add .
+git commit -m "Add request timeout support"
+```
+
+Push the branch to your fork:
+
+```sh
+git push -u fork patch/1234-name-issue
+```
+
+---
+
+## Open a Pull Request
+
+Once your changes have been pushed to your fork, open a pull request against the repository's default branch.
+
+Before submitting the pull request:
+
+- Ensure the changes are focused on the intended issue.
+- Ensure tests pass.
+- Ensure documentation is updated when necessary.
+- Ensure the code follows the project's conventions.
+- Provide a clear description of the changes.
+- Reference the related issue when applicable.
+
+Pull requests should follow the repository's pull request template when one is provided.

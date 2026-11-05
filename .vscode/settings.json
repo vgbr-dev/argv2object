@@ -1,64 +1,14 @@
 {
-  "files.exclude": {
-    "**/.git": true,
-    "**/.svn": true,
-    "**/.hg": true,
-    "**/CVS": true,
-    "**/.DS_Store": true,
-    ".husky": true,
-    ".github": true,
-    "node_modules": true,
-    /* » FILES */
+  // » Editor Settings
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.tabSize": 2,
+  "editor.formatOnSave": false,
+  "editor.renderWhitespace": "none",
 
-    ".editorconfig": true,
-    // » Eslint File Settings
-    ".eslintrc{,.json,.js,.cjs,.yaml,.yml}": true,
-    "eslint.config{,.js,.mjs,.cjs,.ts,.mts,.cts}": true,
-    ".eslintignore": true,
-    // » Git File Settings
-    ".gitattributes": true,
-    ".gitconfig": true,
-    ".gitignore": true,
+  // » ESLint (optimal configuration)
+  "eslint.enable": true,
+  "eslint.run": "onType",
 
-    ".huskyrc": true,
-
-    // » Lint-staged File Settings
-    ".lintstagedrc{,.json}": true,
-    "lint-staged.config{.js,.mjs,.cjs,.ts,.mts,.cts}": true,
-    ".npmignore": true,
-    // » Prettier File Settings
-    ".prettierignore": true,
-    ".prettierrc{,.toml,.cts,.cjs,.mts,.mjs,.ts,.js,.json,.yml,.yaml,.json5}": true,
-    "prettier.config{,.js,.ts,.mjs,.mts,.cjs,.cts}": true,
-
-    // » Commitlint File Settings
-    ".commitlintrc{,.json,.yaml,.yml,.js,.cjs,.mjs,.ts,.cts}": true,
-    "commitlint.config{.js,.cjs,.mjs,.ts,.cts}": true,
-    "forge.config.js": true,
-
-    // » Stylelint File Settings
-    ".stylelintrc{,.js,.mjs,.cjs,.yml,.yaml,.json}": true,
-    "LICENSE": true,
-    "LICENSE.md": true,
-    "jsconfig.json": true,
-    "jsdoc.config.json": true,
-    "package-lock.json": true,
-    "yarn.lock": true,
-    "README.md": false,
-    "vite.config.js": true
-    /**/
-  },
-  "files.associations": {
-    ".babelrc": "jsonc",
-    ".eslintrc": "jsonc",
-    ".eslintrc.json": "jsonc",
-    ".prettierrc": "jsonc",
-    ".stylelintrc": "json",
-    ".eslintignore": "ignore",
-    ".prettierignore": "ignore",
-    ".gitignore": "ignore",
-    ".gitkeep": "markdown",
-  },
   "search.exclude": {
     "**/node_modules": true,
     "**/bower_components": true,
@@ -74,22 +24,80 @@
       "comments": "inline",
       "strings": "inline",
       "other": "inline"
-    },
+    }
   },
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    ".husky": true,
+    ".github": true,
+    "node_modules": true,
 
-  // » Editor Settings
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "editor.tabSize": 2,
-  "editor.formatOnSave": false,
-  "editor.renderWhitespace": "none",
+    /* » FILES */
 
-  // » ESLint (optimal configuration)
-  "eslint.enable": true,
-  "eslint.run": "onType",
-  "eslint.options": {
-    "overrideConfigFile": "eslint.config.mjs"
+    // » Editorconfig Configuration Files
+    ".editorconfig": true,
+
+    // » Eslint Configuration Files
+    // "eslint.config{,.js,.mjs,.cjs,.ts,.mts,.cts}": true,
+    ".eslintignore": true,
+
+    // » Git Configuration Files
+    ".gitattributes": true,
+    ".gitconfig": true,
+    ".gitignore": true,
+
+    // » Lint-staged Configuration Files
+    "lint-staged.config{.js,.mjs,.cjs,.ts,.mts,.cts}": true,
+
+    // » Prettier Configuration Files
+    "prettier.config{,.js,.ts,.mjs,.mts,.cjs,.cts}": true,
+    ".prettierignore": true,
+
+    // » Commitlint Configuration Files
+    "commitlint.config{.js,.cjs,.mjs,.ts,.cts}": true,
+
+    // » Stylelint Configuration Files
+    ".stylelintrc{,.js,.mjs,.cjs,.yml,.yaml,.json}": true,
+
+    // » Vite Configuration Files
+    "vite.config{,.js,.mjs,.cjs,.yml,.yaml,.json}": true,
+
+    // » Forge Configuration Files
+    "forge.config{,.js,.mjs,.cjs,.yml,.yaml,.json}": true,
+
+    // » JSDoc Configuration Files
+    "jsdoc.config{,.js,.mjs,.cjs,.yml,.yaml,.json}": true,
+
+    // "jsconfig.json": true,
+
+    // » NPM Configuration Files
+    ".npmrc": true,
+    ".nvmrc": true,
+    ".npmignore": true,
+    "package-lock.json": true,
+    "package.json": false,
+
+    // » YARN Configuration Files
+    "yarn.lock": true,
+
+    "README.md": false,
+    "LICENSE{,.md,.txt}": true
+    /**/
   },
-  "javascript.validate.enable": false,
-  "commentTranslate.targetLanguage": "en",
-  "commentTranslate.multiLineMerge": true,
+  "files.associations": {
+    ".todos": "markdown",
+    ".babelrc": "jsonc",
+    ".eslintrc": "jsonc",
+    ".eslintrc.json": "jsonc",
+    ".prettierrc": "jsonc",
+    ".stylelintrc": "json",
+    ".eslintignore": "ignore",
+    ".prettierignore": "ignore",
+    ".gitignore": "ignore",
+    ".gitkeep": "markdown"
+  }
 }

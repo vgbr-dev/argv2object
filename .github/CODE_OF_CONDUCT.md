@@ -1,7 +1,6 @@
 ---
 name: Code of Conduct
 about: Create a report to help us improve
-
 ---
 
 # Code of Conduct
@@ -45,4 +44,4 @@ Project maintainers who do not follow or enforce the Code of Conduct in good fai
 
 ## Attribution
 
-This Code of Conduct is adapted from the [Contributor Covenant](https://www.contributor-covenant.org), version 2.0, available at [https://www.contributor-covenant.org/version/1/4/code-of-conduct.html](https://www.contributor-covenant.org/version/1/4/code-of-conduct.html).
+This Code of Conduct is adapted from the [Contributor Covenant](https://www.contributor-covenant.org), version 2.0, available at [Code Of Conduct](https://www.contributor-covenant.org/version/1/4/code-of-conduct.html).

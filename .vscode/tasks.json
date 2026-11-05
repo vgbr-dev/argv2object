@@ -16,9 +16,9 @@
         "app-foo-bar"
       ],
       "options": {
-        "cwd": "${workspaceFolder}" // Establece el directorio de trabajo a la raíz del proyecto
+        "cwd": "${workspaceFolder}"
       },
-      "problemMatcher": [] // Puedes agregar un problemMatcher si develop.js genera errores con un formato específico
+      "problemMatcher": []
     }
   ]
 }
