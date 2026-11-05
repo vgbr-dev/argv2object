@@ -42,7 +42,7 @@ import { createObjectFromArguments } from '#functions';
  *
  * @example
  * ```js
- * // Command: node script.js name=John age=30
+ * // Command: node script.mjs name=John age=30
  * const argumentsv = argv2Object();
  * console.log(argumentsv.name); // 'John'
  * console.log(argumentsv.age); // 30
@@ -50,7 +50,7 @@ import { createObjectFromArguments } from '#functions';
  *
  * @example
  * ```js
- * // Command: node script.js --name=John --verbose
+ * // Command: node script.mjs --name=John --verbose
  * const argumentsv = argv2Object(true);
  * console.log(argumentsv.name); // 'John'
  * console.log(argumentsv.verbose); // true
