@@ -43,7 +43,7 @@ suite('argv2Object Module', () => {
   test('Validation', async subtest => {
     await subtest.test('should throw TypeError when unixmode is not boolean', () => {
       assert.throws(() => {
-        // @ts-expect-error Exercise runtime validation for untyped JavaScript callers.
+        // @ts-expect-error
         argv2Object('invalid');
       }, TypeError);
     });
@@ -102,6 +102,11 @@ suite('argv2Object Module', () => {
       const result = withArguments(['name=John', 'name=Victor'], () => argv2Object());
 
       assert.deepEqual(result, { name: 'Victor' });
+    });
+    await subtest.test('should support numbers in simple keys', () => {
+      const result = withArguments(['key1=value', 'my-key2=other'], () => argv2Object());
+
+      assert.deepEqual(result, { key1: 'value', my_key2: 'other' });
     });
   });
 

@@ -15,7 +15,7 @@
  * @typedef  {object} CommandLinePatterns
  * @property {RegExp} UNIX_SHORT          - Matches short Unix options such as `-a` and `-f=value`.
  * @property {RegExp} UNIX_LONG           - Matches long Unix options such as `--help` and `--output=json`.
- * @property {RegExp} SIMPLE              - Matches `key=value` arguments with hyphenated keys.
+ * @property {RegExp} SIMPLE              - Matches `key=value` arguments with letters, digits, and hyphens.
  */
 
 /**
@@ -37,7 +37,7 @@
 const COMMAND_LINE_PATTERNS = Object.freeze({
   UNIX_SHORT: /^-[a-zA-Z](=.*)?$/,
   UNIX_LONG: /^--[a-zA-Z][a-zA-Z0-9-]*(=.*)?$/,
-  SIMPLE: /^[a-zA-Z]+(?:-[a-zA-Z]+)*=.*$/,
+  SIMPLE: /^[a-zA-Z][a-zA-Z0-9]*(?:-[a-zA-Z0-9]+)*=.*$/,
 });
 
 /**
