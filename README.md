@@ -59,7 +59,6 @@ console.log(args.execute); // true
 console.log(args.h); // true
 
 console.log(args.name); // "John"
-
 ```
 
 ## Dual Module Support
@@ -120,7 +119,7 @@ The `argv2Object(unixmode = false): => ArgvObject` function takes the command-li
 Arguments
 
 | Name       | Type      | Default | Description                                       |
-|------------|-----------|---------|---------------------------------------------------|
+| ---------- | --------- | ------- | ------------------------------------------------- |
 | `unixmode` | `boolean` | `false` | Whether to parse Unix-style command-line options. |
 
 Returns
@@ -129,8 +128,8 @@ Returns an `Object` with keys and values corresponding to the provided arguments
 
 Throws
 
-| Type    | Description                                                                                     |
-|---------|-------------------------------------------------------------------------------------------------|
+| Type        | Description                                                                                 |
+| ----------- | ------------------------------------------------------------------------------------------- |
 | `TypeError` | If `unixmode` is not of type `boolean`.                                                     |
 | `Error`     | If no arguments are provided from command line.                                             |
 | `Error`     | If `unixmode` is `true` and an argument does not follow the Unix-style command-line format. |
