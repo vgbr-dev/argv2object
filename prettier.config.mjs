@@ -6,6 +6,9 @@
  * quoting, semicolons, indentation, and line length.
  *
  * @see {@link https://prettier.io/docs/configuration | Prettier Configuration File}
+ *
+ *
+ * @version 1.0.0
  * @module PrettierConfiguration
  */
 
@@ -13,7 +16,7 @@
 /**
  * Type for Prettier configuration.
  *
- * @typedef {import("prettier").Config} PrettierConfigurationOptions
+ * @typedef {import("prettier").Config} PrettierConfiguration
  */
 
 // ━━ MODULE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -21,23 +24,15 @@
  * Prettier settings for the project.
  *
  * @constant prettierConfiguration
- * @type {PrettierConfigurationOptions}
+ * @type {PrettierConfiguration}
  */
 const prettierConfiguration = {
   trailingComma: 'all',
   printWidth: 100,
   tabWidth: 2,
-  semi: false,
+  semi: true,
   singleQuote: true,
   arrowParens: 'avoid',
-  overrides: [
-    {
-      files: ['.prettierrc', '.babelrc', '.eslintrc', '.stylelintrc'],
-      options: {
-        parser: 'json',
-      },
-    },
-  ],
 };
 
 // ━━ EXPORT MODULE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

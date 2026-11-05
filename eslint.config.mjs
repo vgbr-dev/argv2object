@@ -1,297 +1,434 @@
 /**
  * @file ESLint Configuration for Code Quality and Formatting.
  *
- * @description Custom configuration for ESLint v9, the JavaScript/TypeScript
- * linter. Defines rules and configurations to maintain quality and consistency
+ * @description Custom configuration for ESLint v9, the JavaScript linter.
+ * Defines rules and configurations to maintain quality and consistency
  * in your project's code, along with style rules and best practices.
- * Integrates with Prettier for code formatting and Airbnb style guide as base.
+ * Integrates with Prettier for code formatting.
+ *
+ * NOTE: ESLint Rule Severity Levels:
+ *
+ * - (0) => "off"   Rule is disabled.
+ * - (1) => "warn"  Rule triggers a warning (does not fail the build).
+ * - (2) => "error" Rule triggers an error (fails the build).
  *
  * @see {@link https://eslint.org/docs/latest/use/configure | ESLint Configuration File}
- * @see {@link https://github.com/airbnb/javascript | Airbnb JavaScript Style Guide}
  * @see {@link https://github.com/prettier/eslint-plugin-prettier | ESLint Prettier Plugin}
  *
  * @module EslintConfiguration
  */
+
 // ━━	IMPORT MODULES	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // » IMPORT NATIVE NODE MODULES
-import path from 'path';
-import { fileURLToPath } from 'url';
 
 // » IMPORT THIRD PARTIES MODULES
-import { FlatCompat } from '@eslint/eslintrc';
-import { defineConfig } from 'eslint/config';
+import globals from 'globals';
+import { defineConfig, globalIgnores } from 'eslint/config';
+import js from '@eslint/js';
 import { fixupPluginRules } from '@eslint/compat';
 import eslintConfigPrettier from 'eslint-config-prettier/flat';
+import eslintPluginImportX from 'eslint-plugin-import-x';
 import eslintPluginPrettier from 'eslint-plugin-prettier';
 import eslintPluginJSDOC from 'eslint-plugin-jsdoc';
 
 // ━━ TYPE DEFINITIONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 /**
- * Array with glob pattern.
+ * A glob pattern string for ignoring files/directories.
  *
- * @typedef {Array<string>} BlobPatterns
+ * @typedef {string} IgnorePattern
  */
 
 /**
- * Type for Eslint configuration.
+ * Array of glob patterns to ignore.
  *
- * @typedef  {object}   EslintConfigurationOption
- * @property {string}   name                      - Unique identifier for this configuration.
- * @property {string[]} files                     - File patterns to apply this configuration to.
- * @property {string[]} ignores                   - Patterns to exclude from linting.
- * @property {object[]} extends                   - Base configurations to extend.
- * @property {object}   plugins                   - ESLint plugins with their rules.
- * @property {object}   languageOptions           - Language parsing options.
- * @property {object}   rules                     - Custom rule configurations.
+ * @typedef {Array<IgnorePattern>} IgnorePatterns
  */
 
 /**
- * Type for Eslint configurations.
+ * Type for a single ESLint flat configuration object.
  *
- * @typedef {Array<EslintConfigurationOptions>} EslintConfigurationOptions
+ * @typedef {import('eslint').Linter.Config} ESLintConfig
+ */
+
+/**
+ * Type for the full ESLint flat configuration (usually an array).
+ *
+ * @typedef {import('eslint').Linter.Config[]} ESLintConfigArray
  */
 
 // ━━	CONSTANTS	━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+// » IGNORE PATTERNS
 /**
- * The full filename of the current module (converted from file URL).
+ * Glob pattern that ignore dependencies and package manager files.
  *
- * @constant {string} __filename
+ * @type {IgnorePatterns}
+ * @constant DEPENDENCIES
  */
-const __filename = fileURLToPath(import.meta.url); // eslint-disable-line no-underscore-dangle
+const DEPENDENCIES = ['node_modules/**', 'jspm_packages/', '.pnp', '.pnp.js'];
 
 /**
- * The directory name containing the current module.
+ * Glob pattern that ignore documentation directories.
  *
- * @constant {string} __filename
+ * @type {IgnorePatterns}
+ * @constant DOCUMENTATION
  */
-const __dirname = path.dirname(__filename); // eslint-disable-line no-underscore-dangle
+const DOCUMENTATION = ['docs/**', 'jsdoc/**'];
 
 /**
- * Compatibility layer for ESLint Flat Config.
- * Enables using legacy ESLint config files with the new flat config system.
+ * Glob pattern that ignore Build y production directories.
  *
- * @constant compat
- * @type {FlatCompat}
- * @see {@link https://www.npmjs.com/package/@eslint/eslintrc | @eslint/eslintrc}
+ * @type {IgnorePatterns}
+ * @constant BUILD_OUTPUT
  */
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-});
+const BUILD_OUTPUT = ['build/**', 'dist/**', 'reports/**'];
 
 /**
- * Airbnb base JavaScript style guide configuration.
- * Provides a sensible set of default rules for JavaScript projects.
+ * Glob pattern that ignore Build y production directories.
  *
- * @constant {object} eslintConfigAirbnbBase
- * @see {@link https://www.npmjs.com/package/eslint-config-airbnb-base | eslint-config-airbnb-base}
+ * @type {IgnorePatterns}
+ * @constant TESTING
  */
-const eslintConfigAirbnbBase = compat.extends('eslint-config-airbnb-base');
-
-// ━━ IGNORE PATTERNS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-/**
- * Glob pattern for ignore dependencies and packages files.
- *
- * @constant {BlobPatterns} DEPENDENCIES
- */
-const DEPENDENCIES = ['node_modules/', 'jspm_packages/', '.pnp', '.pnp.js'];
+const TESTING = ['coverage/**', 'tests/bench/**', 'tests/fixtures/**', 'tests/performance/**'];
 
 /**
- * Glob pattern for ignore documentation directories.
+ * Glob pattern that ignore temporary files.
  *
- * @constant {BlobPatterns} DOCUMENTATION
+ * @type {IgnorePatterns}
+ * @constant TEMPORARY
  */
-const DOCUMENTATION = ['/docs/**', '/jsdoc/**'];
+const TEMPORARY = ['tmp/**', '**/*.tmp', '**/*.temp'];
 
 /**
- * Glob pattern for ignore Build y production directories.
+ * Glob pattern that ignore playground directory.
  *
- * @constant {BlobPatterns} BUILD_OUTPUT
+ * @type {IgnorePatterns}
+ * @constant PLAYGROUND
  */
-const BUILD_OUTPUT = ['/build/**', '/dist/**', 'reports/'];
-
-/**
- * Glob pattern for ignore Build y production directories.
- *
- * @constant {BlobPatterns} TESTING
- */
-const TESTING = ['/coverage/**', '/tests/bench/**', '/tests/fixtures/**', '/tests/performance/**'];
-
-/**
- * Glob pattern for ignore temporary files.
- *
- * @constant {BlobPatterns} TEMPORARY
- */
-const TEMPORARY = ['/tmp/**', '*.tmp', '*.temp'];
-
-/**
- * Glob pattern for ignore development and workspace files and directories.
- *
- * @constant {BlobPatterns} WORKSPACE
- */
-const WORKSPACE = [
-  '/templates/**',
-  '/notes/**',
-  '/development/**',
-  '/develop.js',
-  '/develop[-_.][0-9][0-9].js',
+const PLAYGROUND = [
+  'playground/*',
+  '!playground/drafts/',
+  '!playground/drafts/**',
+  '!playground/scripts/',
+  '!playground/scripts/**',
+  '!playground/workspace/**',
 ];
 
 /**
- * Glob pattern for ignore files.
+ * Glob pattern that ignore development and workspace files and directories.
  *
- * @constant {BlobPatterns} SPECIFIC_FILES
+ * @type {IgnorePatterns}
+ * @constant WORKSPACE
  */
-const SPECIFIC_FILES = [
-  '**/serviceWorker.js',
-  '!.eslintrc', // Excepción: NO ignorar el archivo .eslintrc
-];
+const WORKSPACE = ['templates/**', 'notes/**', 'development/**', 'develop[-_.][0-9][0-9].js'];
 
-const IGNORES_FILES = [
+/**
+ * Glob pattern that ignore files.
+ *
+ * @type {IgnorePatterns}
+ * @constant SPECIFIC_FILES
+ */
+const SPECIFIC_FILES = ['**/serviceWorker.js'];
+
+/**
+ * Glob pattern that ignore the React client workspace.
+ *
+ * @type {IgnorePatterns}
+ * @constant CLIENT
+ */
+const CLIENT = ['client/**'];
+
+/**
+ * Combined list of all glob patterns to exclude from linting.
+ *
+ * Merges categorized ignore patterns (dependencies, build outputs,
+ * documentation, tests, temporary files, etc.).
+ *
+ * @type {IgnorePatterns}
+ * @constant IGNORES_FILES
+ */
+const IGNORE_PATTERNS = [
   ...DEPENDENCIES,
   ...DOCUMENTATION,
   ...BUILD_OUTPUT,
   ...TESTING,
   ...TEMPORARY,
+  ...PLAYGROUND,
   ...WORKSPACE,
   ...SPECIFIC_FILES,
+  ...CLIENT,
 ];
+
+/**
+ * Global ignore patterns applied to the entire project.
+ *
+ * Uses ESLint's `globalIgnores()` helper so these patterns affect
+ * all configuration blocks.
+ *
+ * @type {ReturnType<typeof globalIgnores>}
+ */
+const GLOBAL_IGNORE_PATTERNS = globalIgnores(IGNORE_PATTERNS);
+
+// ━━ ESLINT RULES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+/**
+ * Base ESLint configuration for the project.
+ *
+ * This is the core configuration block that establishes foundational
+ * JavaScript best practices and code quality rules for all supported
+ * file types (JavaScript, TypeScript, and JSX).
+ *
+ * It extends ESLint's recommended rules and adds custom rules focused on:
+ * - Modern JavaScript practices (`no-var`, `prefer-const`).
+ * - Code clarity and safety (`no-param-reassign`, `no-shadow`).
+ * - Console usage control.
+ * - Unused variable handling with common ignore patterns (leading underscore).
+ *
+ * This configuration serves as the foundation for all other specialized
+ * blocks (Prettier, JSDoc, etc.).
+ *
+ * @type {ESLintConfig}
+ * @constant BASE_CONFIGURATION
+ */
+const BASE_CONFIGURATION = {
+  name: 'base',
+  files: ['**/*.{js,mjs,cjs,ts,mts,jsx,tsx}'],
+  extends: [js.configs.recommended],
+  languageOptions: {
+    ecmaVersion: 'latest',
+    sourceType: 'module',
+    globals: {
+      ...globals.node,
+    },
+  },
+  rules: {
+    'no-console': ['error', { allow: ['warn', 'error'] }],
+    'no-param-reassign': ['error', { props: false }],
+    'no-unused-vars': [
+      'error',
+      {
+        argsIgnorePattern: '^_',
+        caughtErrorsIgnorePattern: '^_',
+        destructuredArrayIgnorePattern: '^_',
+      },
+    ],
+    'no-var': 'error',
+    'prefer-const': 'error',
+    'no-shadow': 'error',
+    'object-shorthand': ['error', 'always'],
+    'max-classes-per-file': ['error', 1],
+    'no-underscore-dangle': ['off'],
+    'no-plusplus': 'error',
+  },
+};
+
+/**
+ * ESLint configuration that validates ECMAScript module imports.
+ *
+ * Enforces best practices for module imports by detecting unresolved
+ * modules, invalid exports, duplicate imports, dependency issues, and
+ * consistent import organization.
+ *
+ * This configuration helps maintain reliable and predictable module
+ * resolution while promoting a consistent import structure across the
+ * project.
+ *
+ * @type {ESLintConfig}
+ */
+const IMPORT_CONFIGURATION = {
+  name: 'import',
+  files: ['**/*.{js,mjs,cjs,ts,mts,jsx,tsx}'],
+  plugins: {
+    import: fixupPluginRules(eslintPluginImportX),
+  },
+  settings: {
+    'import/resolver': {
+      node: true,
+      extensions: ['.js', '.mjs', '.cjs'],
+    },
+    'import/extensions': ['.js', '.mjs', '.cjs'],
+  },
+  rules: {
+    'import/no-unresolved': 'error',
+    'import/named': 'error',
+    'import/default': 'error',
+    'import/export': 'error',
+    'import/no-duplicates': 'error',
+    'import/no-extraneous-dependencies': [
+      'error',
+      {
+        devDependencies: true,
+        optionalDependencies: false,
+        peerDependencies: false,
+      },
+    ],
+    'import/first': 'error',
+    'import/newline-after-import': 'error',
+    'import/order': [
+      'off',
+      {
+        groups: ['builtin', 'external', 'internal', 'parent', 'sibling', 'index'],
+        'newlines-between': 'always',
+        alphabetize: {
+          order: 'asc',
+          caseInsensitive: true,
+        },
+      },
+    ],
+    'import/no-commonjs': 'warn',
+  },
+};
+
+/**
+ * ESLint configuration that integrates Prettier.
+ *
+ * Disables ESLint rules that conflict with Prettier and runs
+ * Prettier as an ESLint rule, reporting formatting issues as
+ * linting errors.
+ *
+ * @type {ESLintConfig}
+ */
+const PRETTIER_CONFIGURATION = {
+  name: 'prettier',
+  extends: [eslintConfigPrettier],
+  plugins: {
+    prettier: fixupPluginRules(eslintPluginPrettier),
+  },
+  rules: {
+    'prettier/prettier': 'error',
+  },
+};
+
+/**
+ * ESLint configuration block that enforces comprehensive JSDoc validation.
+ *
+ * Applies strict documentation standards including:
+ *
+ * - Required descriptions.
+ * - Parameter and return validation.
+ * - Type correctness.
+ * - Formatting and alignment rules.
+ *
+ * Targets JavaScript and TypeScript source files.
+ *
+ * @type {ESLintConfig}
+ */
+const JSDOC_CONFIGURATION = {
+  name: 'jsdoc',
+  files: ['**/*.{js,mjs,cjs,ts,mts,jsx,tsx}'],
+  plugins: {
+    jsdoc: fixupPluginRules(eslintPluginJSDOC),
+  },
+  rules: {
+    'jsdoc/check-access': 'warn',
+    'jsdoc/check-alignment': 'warn',
+    'jsdoc/check-examples': [
+      'off',
+      {
+        exampleCodeRegex: '```js\n([\\s\\S]*)```',
+      },
+    ],
+    'jsdoc/check-indentation': 'warn',
+    'jsdoc/check-line-alignment': [
+      'error',
+      'always',
+      {
+        tags: ['typedef', 'property'],
+        customSpacings: { postDelimiter: 1 },
+      },
+    ],
+    'jsdoc/check-param-names': 'warn',
+    'jsdoc/check-property-names': 'warn',
+    'jsdoc/check-syntax': 'warn',
+    'jsdoc/check-tag-names': [
+      'error',
+      {
+        definedTags: ['hook', 'record', 'component'],
+      },
+    ],
+    'jsdoc/check-types': 'warn',
+    'jsdoc/check-values': 'warn',
+    'jsdoc/empty-tags': 'warn',
+    'jsdoc/implements-on-classes': 'warn',
+    'jsdoc/match-description': 'warn',
+    'jsdoc/newline-after-description': 'off',
+    'jsdoc/no-bad-blocks': 'warn',
+    'jsdoc/no-defaults': 'warn',
+    'jsdoc/no-types': 'off',
+    'jsdoc/no-undefined-types': [
+      'error',
+      {
+        definedTypes: [
+          'JSX.Element',
+          'ReactNode',
+          'ReactElement',
+          'ReadonlySet',
+          'IterableIterator',
+          'Generator',
+          'AsyncIterator',
+          'BufferSource',
+          'ArrayBufferView',
+          'HTMLSelectElement',
+          'HTMLElement',
+          'HTMLButtonElement',
+          'HTMLInputElement',
+          'HTMLTextAreaElement',
+          'HTMLUListElement',
+          'Element',
+          'HTMLDialogElement',
+          'HTMLTemplateElement',
+        ],
+      },
+    ],
+    'jsdoc/require-asterisk-prefix': 'warn',
+    'jsdoc/require-description': 'warn',
+    'jsdoc/require-description-complete-sentence': 'warn',
+    'jsdoc/require-example': [
+      'error',
+      {
+        exemptedBy: ['private', 'inheritdoc', 'abstract', 'internal'],
+        contexts: [
+          'MethodDefinition[kind="method"][key.type="Identifier"]',
+          'MethodDefinition[kind="constructor"]',
+          'ArrowFunctionExpression',
+          'FunctionDeclaration',
+        ],
+      },
+    ],
+    'jsdoc/require-file-overview': 'warn',
+    'jsdoc/require-hyphen-before-param-description': 'warn',
+    'jsdoc/require-jsdoc': 'warn',
+    'jsdoc/require-param': 'warn',
+    'jsdoc/require-param-description': 'warn',
+    'jsdoc/require-param-name': 'warn',
+    'jsdoc/require-param-type': 'warn',
+    'jsdoc/require-property': 'warn',
+    'jsdoc/require-property-description': 'warn',
+    'jsdoc/require-property-name': 'warn',
+    'jsdoc/require-property-type': 'warn',
+    'jsdoc/require-returns': 'warn',
+    'jsdoc/require-returns-check': 'warn',
+    'jsdoc/require-returns-description': 'warn',
+    'jsdoc/require-returns-type': 'warn',
+    'jsdoc/require-throws': 'warn',
+    'jsdoc/require-yields': 'warn',
+    'jsdoc/require-yields-check': 'warn',
+    'jsdoc/valid-types': 'warn',
+  },
+};
 
 // ━━ MODULE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 /**
  * The Eslint settings for the project.
  *
  * @constant eslintConfiguration
- * @type {EslintConfigurationOptions}
+ * @type {ESLintConfigArray}
  */
 const eslintConfiguration = defineConfig([
-  {
-    name: 'eslint/main',
-    files: ['**/*.{js,mjs,cjs,ts,mts,jsx,tsx}'],
-    ignores: IGNORES_FILES,
-    extends: [eslintConfigAirbnbBase, eslintConfigPrettier],
-    plugins: {
-      prettier: fixupPluginRules(eslintPluginPrettier),
-      jsdoc: fixupPluginRules(eslintPluginJSDOC),
-    },
-    languageOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'module',
-    },
-    settings: {
-      'import/resolver': {
-        node: {
-          extensions: ['.js', '.mjs', '.cjs', '.ts', '.mts', '.jsx', '.tsx'],
-          paths: ['.'],
-        },
-        alias: true,
-      },
-    },
-    rules: {
-      // » GENERAL RULES
-      strict: [2, 'global'],
-      'no-console': ['error', { allow: ['warn', 'error'] }],
-      'no-param-reassign': ['error', { props: false }],
-      // » PRETTIER RULES
-      'prettier/prettier': [
-        'error',
-        {
-          trailingComma: 'all',
-          printWidth: 100,
-          tabWidth: 2,
-          semi: true,
-          singleQuote: true,
-          arrowParens: 'avoid',
-        },
-      ],
-      'import/no-extraneous-dependencies': [
-        'error',
-        {
-          devDependencies: ['eslint.config.mjs'],
-        },
-      ],
-      'import/no-unresolved': [
-        'error',
-        {
-          commonjs: true,
-          amd: true,
-          caseSensitive: true,
-          ignore: ['^#'], // Ignora los imports que comienzan con #
-        },
-      ],
-      'import/extensions': [
-        'error',
-        'ignorePackages',
-        {
-          js: 'always',
-          mjs: 'always',
-          cjs: 'always',
-          ts: 'always',
-          jsx: 'always',
-          tsx: 'always',
-        },
-      ],
-      // » JSDOC rules
-      'jsdoc/check-access': 1,
-      'jsdoc/check-alignment': 1,
-      'jsdoc/check-examples': [
-        0,
-        {
-          exampleCodeRegex: '```js\n([\\s\\S]*)```',
-        },
-      ],
-      'jsdoc/check-indentation': 1,
-      'jsdoc/check-line-alignment': [
-        'error',
-        'always',
-        {
-          tags: ['typedef', 'property'],
-          customSpacings: { postDelimiter: 1 },
-        },
-      ],
-      'jsdoc/check-param-names': 1,
-      'jsdoc/check-property-names': 1,
-      'jsdoc/check-syntax': 1,
-      'jsdoc/check-tag-names': [
-        'error',
-        {
-          definedTags: ['hook', 'record'],
-        },
-      ],
-      'jsdoc/check-types': 1,
-      'jsdoc/check-values': 1,
-      'jsdoc/empty-tags': 1,
-      'jsdoc/implements-on-classes': 1,
-      'jsdoc/match-description': 1,
-      'jsdoc/newline-after-description': 'off',
-      'jsdoc/no-bad-blocks': 1,
-      'jsdoc/no-defaults': 1,
-      'jsdoc/no-types': 0,
-      'jsdoc/no-undefined-types': 1,
-      'jsdoc/require-asterisk-prefix': 1,
-      'jsdoc/require-description': 1,
-      'jsdoc/require-description-complete-sentence': 1,
-      'jsdoc/require-example': 1,
-      'jsdoc/require-file-overview': 1,
-      'jsdoc/require-hyphen-before-param-description': 1,
-      'jsdoc/require-jsdoc': 1,
-      'jsdoc/require-param': 1,
-      'jsdoc/require-param-description': 1,
-      'jsdoc/require-param-name': 1,
-      'jsdoc/require-param-type': 1,
-      'jsdoc/require-property': 1,
-      'jsdoc/require-property-description': 1,
-      'jsdoc/require-property-name': 1,
-      'jsdoc/require-property-type': 1,
-      'jsdoc/require-returns': 1,
-      'jsdoc/require-returns-check': 1,
-      'jsdoc/require-returns-description': 1,
-      'jsdoc/require-returns-type': 1,
-      'jsdoc/require-throws': 1,
-      'jsdoc/require-yields': 1,
-      'jsdoc/require-yields-check': 1,
-      'jsdoc/valid-types': 1,
-    },
-  },
+  GLOBAL_IGNORE_PATTERNS,
+  BASE_CONFIGURATION,
+  IMPORT_CONFIGURATION,
+  JSDOC_CONFIGURATION,
+  PRETTIER_CONFIGURATION,
 ]);
 
 // ━━ EXPORT MODULE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
