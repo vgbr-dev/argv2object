@@ -1,102 +1,211 @@
+// @ts-check
 /**
- * @author Victor Giovanni Beltrán Rodríguez
- * @file This file contains the test for the `argv2Object` function.
+ * @file Tests command-line argument parsing, value conversion, and key formatting.
+ *
+ * @module argv2Object.test
  */
 
 // ━━ IMPORT MODULES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-// » IMPORT NATIVE NODE MODULES
-import { describe, it, afterEach, beforeEach } from 'node:test';
-import assert from 'node:assert';
+// » IMPORT NATIVE NODEJS MODULES
+import { suite, test } from 'node:test';
+import assert from 'node:assert/strict';
 
-// » IMPORT MODULES
+// » IMPORT LOCAL MODULES
 import argv2Object from '#argv2Object';
+import { convertValue, formatKey } from '#functions';
+import { COMMAND_LINE_PATTERNS, ERROR_MESSAGES } from '#constants';
 
-// ━━ CONSTANTS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// ━━ FUNCTIONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 /**
- * This constant defines the errors that can be thrown by
- * the `argv2Object` function.
+ * Runs `callback` with `process.argv` replaced by the given arguments.
+ *
+ * Restores the original `process.argv` even if `callback` throws.
  *
  * @private
- * @constant {object} THROWS
+ * @template T
+ * @param {string[]} argumentsv - The arguments to expose via `process.argv`.
+ * @param {() => T} callback - The function to run.
+ * @returns {T} The value returned by `callback`.
  */
-const THROWS_ERRORS_MESSAGES = {
-  INVALID_UNIXMODE_TYPE: {
-    name: 'TypeError',
-    message: 'The "unixmode" parameter must be a boolean value',
-  },
-  NO_ARGUMENTS: {
-    name: 'Error',
-    message: 'No command-line arguments were provided',
-  },
-  NO_MATCH_SIMPLE: {
-    name: 'Error',
-    message: `Arguments must follow "key=value" format`,
-  },
-  NO_MATCH_UNIXMODE: {
-    name: 'Error',
-    message: `Arguments must follow Unix-style format (-a, --option=value)`,
-  },
+const withArguments = (argumentsv, callback) => {
+  const originalArguments = process.argv;
+  process.argv = ['node', 'script.mjs', ...argumentsv];
+
+  try {
+    return callback();
+  } finally {
+    process.argv = originalArguments;
+  }
 };
 
 // ━━ TEST ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-describe('argv2Object', () => {
-  const original = process.argv;
-
-  beforeEach(() => {
-    process.argv = [...original];
-  });
-
-  afterEach(() => {
-    process.argv = original;
-  });
-
-  it('should throw an "TypeError" when "unixmode" is not a boolean type', () => {
-    Object.assign(process.argv, {
-      2: 'task',
-      3: 'invalid-arg',
+suite('argv2Object Module', () => {
+  test('Validation', async subtest => {
+    await subtest.test('should throw TypeError when unixmode is not boolean', () => {
+      assert.throws(() => {
+        // @ts-expect-error Exercise runtime validation for untyped JavaScript callers.
+        argv2Object('invalid');
+      }, TypeError);
     });
-    assert.throws(() => argv2Object(12), THROWS_ERRORS_MESSAGES.INVALID_UNIXMODE_TYPE);
-  });
 
-  it('should throw an "Error" when no arguments are provided', () => {
-    process.argv = ['node', 'script.js'];
-    assert.throws(() => argv2Object(), THROWS_ERRORS_MESSAGES.NO_ARGS);
-  });
-
-  it('should throw an "Error" when an argument does not match the expected format', () => {
-    Object.assign(process.argv, {
-      2: '-task',
-      3: 'invalid-arg',
+    await subtest.test('should throw Error when no arguments are provided', () => {
+      assert.throws(() => withArguments([], () => argv2Object()), {
+        message: ERROR_MESSAGES.NO_ARGUMENTS,
+      });
     });
-    assert.throws(() => argv2Object(), THROWS_ERRORS_MESSAGES.NO_MATCH_SIMPLE);
+
+    await subtest.test('should throw Error when simple format is invalid', () => {
+      assert.throws(() => withArguments(['invalid'], () => argv2Object()), {
+        message: ERROR_MESSAGES.NO_MATCH_SIMPLE,
+      });
+    });
+
+    await subtest.test('should throw Error when unix format is invalid', () => {
+      assert.throws(() => withArguments(['--bad_name'], () => argv2Object(true)), {
+        message: ERROR_MESSAGES.NO_MATCH_UNIXMODE,
+      });
+    });
   });
 
-  it('should throw an "Error" when a Unix-style argument does not match the expected format', () => {
-    Object.assign(process.argv, {
-      2: 'task',
-      3: 'invalid-arg',
+  test('Simple Mode', async subtest => {
+    await subtest.test('should convert key=value pairs', () => {
+      const result = withArguments(['name=John', 'age=30', 'level=0'], () => argv2Object());
+
+      assert.deepEqual(result, { name: 'John', age: 30, level: 0 });
     });
-    assert.throws(() => argv2Object(true), THROWS_ERRORS_MESSAGES.NO_MATCH_UNIXMODE);
+
+    await subtest.test('should convert numeric values', () => {
+      const result = withArguments(['count=42', 'price=3.14', 'negative=-5'], () => argv2Object());
+
+      assert.deepEqual(result, { count: 42, price: 3.14, negative: -5 });
+    });
+
+    await subtest.test('should convert boolean values', () => {
+      const result = withArguments(['active=true', 'verbose=false'], () => argv2Object());
+
+      assert.deepEqual(result, { active: true, verbose: false });
+    });
+
+    await subtest.test('should preserve empty string values', () => {
+      const result = withArguments(['name='], () => argv2Object());
+
+      assert.deepEqual(result, { name: '' });
+    });
+
+    await subtest.test('should preserve equals signs inside the value', () => {
+      const result = withArguments(['url=https://example.com?a=1&b=2'], () => argv2Object());
+
+      assert.deepEqual(result, { url: 'https://example.com?a=1&b=2' });
+    });
+
+    await subtest.test('should use the last value for repeated keys', () => {
+      const result = withArguments(['name=John', 'name=Victor'], () => argv2Object());
+
+      assert.deepEqual(result, { name: 'Victor' });
+    });
   });
 
-  it('should convert simple key-value pairs to an object', () => {
-    Object.assign(process.argv, {
-      2: 'name=John',
-      3: 'age=30',
-      4: 'level=0',
+  test('Unix Mode', async subtest => {
+    await subtest.test('should convert short and long flags to true', () => {
+      const result = withArguments(['-h', '--help', '--is-admin'], () => argv2Object(true));
+
+      assert.deepEqual(result, { h: true, help: true, is_admin: true });
     });
-    const result = argv2Object();
-    assert.deepStrictEqual(result, { name: 'John', age: 30, level: 0 });
+
+    await subtest.test('should convert --key=value pairs', () => {
+      const result = withArguments(['--name=John', '--age=30'], () => argv2Object(true));
+
+      assert.deepEqual(result, { name: 'John', age: 30 });
+    });
+
+    await subtest.test('should convert short flags with explicit values', () => {
+      const result = withArguments(['-p=8080'], () => argv2Object(true));
+
+      assert.deepEqual(result, { p: 8080 });
+    });
+
+    await subtest.test('should support numbers in long option keys', () => {
+      const result = withArguments(['--option2=value'], () => argv2Object(true));
+
+      assert.deepEqual(result, { option2: 'value' });
+    });
+
+    await subtest.test('should preserve equals signs inside unix values', () => {
+      const result = withArguments(['--url=https://example.com?a=1'], () => argv2Object(true));
+
+      assert.deepEqual(result, { url: 'https://example.com?a=1' });
+    });
+
+    await subtest.test('should preserve explicit empty values', () => {
+      const result = withArguments(['--empty='], () => argv2Object(true));
+
+      assert.deepEqual(result, { empty: '' });
+    });
+
+    await subtest.test('should convert valueless flags to true', () => {
+      const result = withArguments(['--enabled'], () => argv2Object(true));
+
+      assert.deepEqual(result, { enabled: true });
+    });
   });
 
-  it('should convert Unix-style options to an object', () => {
-    Object.assign(process.argv, {
-      2: '-h',
-      3: '--help',
-      4: '--name=John',
-      5: '--is-admin',
+  test('convertValue', async subtest => {
+    await subtest.test('should convert supported finite numeric strings', () => {
+      assert.equal(convertValue('42'), 42);
+      assert.equal(convertValue('-3.5'), -3.5);
+      assert.equal(convertValue('1e3'), 1000);
     });
-    const result = argv2Object(true);
-    assert.deepStrictEqual(result, { h: true, help: true, name: 'John', is_admin: true });
+
+    await subtest.test('should convert signed and fractional numeric strings', () => {
+      assert.equal(convertValue('+42'), 42);
+      assert.equal(convertValue('.5'), 0.5);
+      assert.equal(convertValue('5.'), 5);
+      assert.equal(convertValue('-1e3'), -1000);
+    });
+
+    await subtest.test('should preserve non-decimal numeric strings', () => {
+      assert.equal(convertValue('0xFF'), '0xFF');
+      assert.equal(convertValue('0b101'), '0b101');
+      assert.equal(convertValue('1_000'), '1_000');
+      assert.equal(convertValue('Infinity'), 'Infinity');
+      assert.equal(convertValue('1e999'), '1e999');
+    });
+
+    await subtest.test('should preserve text that is not fully numeric', () => {
+      assert.equal(convertValue('12px'), '12px');
+    });
+
+    await subtest.test('should preserve empty strings and convert undefined to true', () => {
+      assert.equal(convertValue(''), '');
+      assert.equal(convertValue(undefined), true);
+    });
+  });
+
+  test('formatKey', async subtest => {
+    await subtest.test('should convert to camelCase', () => {
+      assert.equal(formatKey('--some-FLAG', 'camelcase'), 'someFLAG');
+    });
+
+    await subtest.test('should convert to snake_case', () => {
+      assert.equal(formatKey('--some-flag', 'snakecase'), 'some_flag');
+    });
+
+    await subtest.test('should preserve casing when no mode is provided', () => {
+      assert.equal(formatKey('--some-flag'), 'some-flag');
+    });
+
+    await subtest.test('should reject invalid casing modes', () => {
+      assert.throws(() => {
+        // @ts-expect-error Exercise runtime validation for untyped JavaScript callers.
+        formatKey('--flag', 'invalid');
+      }, TypeError);
+    });
+  });
+
+  test('Constants', async subtest => {
+    await subtest.test('should keep validation patterns immutable', () => {
+      assert.equal(Object.isFrozen(COMMAND_LINE_PATTERNS), true);
+      assert.equal(Object.isFrozen(ERROR_MESSAGES), true);
+    });
   });
 });
