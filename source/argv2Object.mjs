@@ -1,27 +1,13 @@
+// @ts-check
 /**
- * @file Converts command-line arguments to a key-value object.
+ * @file Converts command-line arguments into a key-value object.
  *
- * A utility function for converting command-line arguments to a key-value
- * object.
+ * @description Parses arguments from `process.argv` as simple `key=value`
+ * pairs or Unix-style options.
  *
- * This file defines a single function, `argv2Object`, which parses
- * command-line arguments and returns an object with keys and values
- * corresponding to the provided arguments. The function can handle two types of
- * arguments: simple key-value pairs (e.g. "key=value") and Unix-style
- * command-line arguments (e.g. "-k value" or "--key=value").
- *
- * @version 1.1.0
- *
- * @example
- *  Simple key-value pairs
- *  Command line input: node script.js name=John age=30 level=admin
- *  Output: { name: 'John', age: '30', level: "admin" }
- *
- * @example
- * Unix-style command-line options
- * Command line input: node script.js -h --name=John --is-admin
- * Output: { h: true, name: 'John', is_admin: true }
+ * @module argv2Object
  */
+
 // ━━ IMPORT MODULES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 // » IMPORT LOCAL MODULES
 import { COMMAND_LINE_PATTERNS, ERROR_MESSAGES } from '#constants';
@@ -29,36 +15,45 @@ import { createObjectFromArguments } from '#functions';
 
 // ━━ TYPE DEFINITIONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 /**
- * An `Object` with keys and values corresponding to the provided arguments.
+ * Value produced by converting a raw command-line argument.
  *
- * @typedef  {object}         ArgvObject
- * @property {string|boolean} [key=value] - The key-value pairs in the provided arguments.
+ * @typedef {string|number|boolean} ArgumentValue
+ */
+
+/**
+ * Parsed command-line arguments keyed by their normalized names.
+ *
+ * @typedef {Record<string, ArgumentValue>} ArgvObject
  */
 
 // ━━ MODULE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 /**
- * The `argv2Object()` function, converts command-line arguments to a key-value
- * object.
+ * Converts command-line arguments into an object.
  *
- * This function takes an array of command-line arguments and converts them to a
- * JavaScript object with keys and values based on the provided argument format.
- * The format can be either simple key-value pairs (e.g. "key=value") or
- * Unix-style command-line options (e.g. "-o --option=value").
+ * Simple mode accepts `key=value` arguments. Unix mode accepts short options
+ * such as `-v` and long options such as `--verbose` or `--output=json`.
+ * Argument values are converted to booleans or finite decimal numbers when
+ * their complete string representation matches the supported format.
  *
- * @function
- * @param {boolean} [unixmode] - Whether to parse Unix-style command-line options, the default value is `false`.
- * @returns {ArgvObject} Returns an object with keys and values corresponding to the provided arguments.
- * @throws {TypeError} If `unixmode` is not is not of type `boolean`.
- * @throws {Error} If no arguments are provided from command line.
- * @throws {Error} If `unixmode` is `true` and argument does not follow Unix-style command-line format.
- * @throws {Error} If `unixmode` is `false` and argument does not follow 'key=value' format.
+ * @param {boolean} [unixmode] - Whether to parse Unix-style options. Defaults to `false`.
+ * @returns {ArgvObject} The object created from the command-line arguments.
+ * @throws {TypeError} If `unixmode` is not a boolean.
+ * @throws {Error} If no arguments are provided or an argument has an invalid format.
+ *
  * @example
  * ```js
- * // Command line input: node script.js --task=some-task --execute=true
- *
+ * // Command: node script.js name=John age=30
  * const argumentsv = argv2Object();
- * console.log(argumentsv.task); // prints 'some-task'
- * console.log(argumentsv.execute); // prints true
+ * console.log(argumentsv.name); // 'John'
+ * console.log(argumentsv.age); // 30
+ * ```
+ *
+ * @example
+ * ```js
+ * // Command: node script.js --name=John --verbose
+ * const argumentsv = argv2Object(true);
+ * console.log(argumentsv.name); // 'John'
+ * console.log(argumentsv.verbose); // true
  * ```
  */
 const argv2Object = (unixmode = false) => {
@@ -67,6 +62,7 @@ const argv2Object = (unixmode = false) => {
   }
 
   const argumentsv = process.argv.slice(2);
+
   if (argumentsv.length === 0) {
     throw new Error(ERROR_MESSAGES.NO_ARGUMENTS);
   }

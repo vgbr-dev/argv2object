@@ -1,124 +1,126 @@
+// @ts-check
 /**
- * @file Module containing utility functions for argument processing.
+ * @file Provides internal argument formatting and conversion functions.
  *
- * Provides formatting and type conversion functions used internally
- * by the argv2object library to normalize and transform command-line
- * arguments into consistent JavaScript data structures.
+ * @description Normalizes argument keys, converts supported primitive values,
+ * and builds the object returned by the public parser.
  *
- * @module Functions
- * @since 1.0.0
+ * @module functions
  */
 
-// ━━ MODULE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// ━━ TYPE DEFINITIONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 /**
- * Normalizes and formats argument keys according to specified casing convention.
+ * Supported key formatting modes.
  *
- * Removes leading dashes from command-line flags and applies optional case conversion.
+ * @typedef {'camelcase'|'snakecase'} CaseMode
+ */
+
+/**
+ * Supported values produced by command-line argument parsing.
  *
- * Supports:
+ * @typedef {string|number|boolean} ArgumentValue
+ */
+
+/**
+ * Object containing parsed command-line arguments.
  *
- * - camelCase conversion (--some-flag → someFlag).
- * - snake_case conversion (--some-flag → some_flag).
- * - No conversion (--some-flag → some-flag).
+ * @typedef {Record<string, ArgumentValue>} ArgvObject
+ */
+
+// ━━ CONSTANTS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+/**
+ * Matches finite decimal numbers, including signed, fractional, and
+ * scientific notation. Rejects hexadecimal, binary, and numeric separators.
  *
- * @exports
+ * @type {RegExp}
+ */
+const NUMERIC_VALUE_PATTERN = /^[+-]?(?:\d+(?:\.\d*)?|\.\d+)(?:e[+-]?\d+)?$/i;
+
+// ━━ FUNCTIONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+/**
+ * Removes option prefixes and applies the requested key casing.
+ *
  * @private
- * @function formatKey
- * @param {string} key - The raw key from command-line arguments.
- * @param {'camelcase'|'snakecase'} [mode] - Target formatting mode.
- * @returns {string} Normalized and formatted key.
- * @throws {TypeError} If key is not a string.
- * @example
- * ```js
- * formatKey('--output-format', 'camelcase') // returns 'outputFormat'
- * formatKey('-v', 'snakecase') // returns 'v' (no underscores needed)
- * formatKey('--enable-logging') // returns 'enable-logging'
- * ```
+ * @param {string} key - The raw argument key.
+ * @param {CaseMode} [mode] - The target casing convention.
+ * @returns {string} The normalized key.
+ * @throws {TypeError} If the key or casing mode is invalid.
  */
 const formatKey = (key, mode) => {
   if (typeof key !== 'string') {
     throw new TypeError('Key must be a string');
   }
-  const sanitizedKey = key.replace(/^-{1,2}/, '');
+
+  if (mode !== undefined && mode !== 'camelcase' && mode !== 'snakecase') {
+    throw new TypeError('Key mode must be "camelcase" or "snakecase"');
+  }
+
+  const normalizedKey = key.replace(/^-{1,2}/, '');
 
   if (mode === 'camelcase') {
-    return sanitizedKey.replace(/-([a-z])/g, (_, char) => char.toUpperCase());
+    return normalizedKey.replace(/-([a-z])/gi, (_, character) => character.toUpperCase());
   }
 
   if (mode === 'snakecase') {
-    return sanitizedKey.replace(/-/g, '_');
+    return normalizedKey.replace(/-/g, '_');
   }
 
-  return sanitizedKey;
+  return normalizedKey;
 };
 
 /**
- * Converts string values from command-line arguments to proper JavaScript types.
+ * Converts boolean and finite decimal strings while preserving other text.
  *
- * Performs automatic conversion of:
- *
- * - 'true'/'false' strings → boolean.
- * - Numeric strings → number.
- * - undefined values → true (for flag arguments).
- * - All other values remain as strings.
- *
- * @exports
  * @private
- * @function convertValue
- * @param {string} [value] - The value to convert.
- * @returns {string|boolean|number} Converted value.
- * @example
- * ```js
- * convertValue('true') // returns true
- * convertValue('42') // returns 42
- * convertValue() // returns true (for flag arguments)
- * convertValue('text') // returns 'text'
- * ```
+ * @param {string|undefined} value - The raw argument value.
+ * @returns {ArgumentValue} The converted value.
  */
 const convertValue = value => {
-  if (value === undefined) return true;
-  if (value === 'true') return true;
-  if (value === 'false') return false;
-  if (!Number.isNaN(value) && !Number.isNaN(parseFloat(value))) return Number(value);
-  return value;
+  if (value === undefined || value === 'true') {
+    return true;
+  }
+
+  if (value === 'false') {
+    return false;
+  }
+
+  if (value !== undefined && NUMERIC_VALUE_PATTERN.test(value) && Number.isFinite(Number(value))) {
+    return Number(value);
+  }
+
+  return value ?? '';
 };
 
 /**
- * Creates an object from command line arguments by parsing key-value pairs.
+ * Parses one argument into its normalized key and converted value.
  *
- * @param {string[]} argumentsv - Array of command line arguments to process.
- * @param {'camelcase'|'snakecase'} mode - Target formatting mode.
- * @returns {object} Object with parsed keys and converted values.
- * @throws {Error} When arguments cannot be parsed into valid key-value pairs.
+ * @private
+ * @param {string} argument - The argument to parse.
+ * @param {CaseMode} mode - The target key casing convention.
+ * @returns {[string, ArgumentValue]} The normalized key and converted value.
+ */
+const parseArgument = (argument, mode) => {
+  const separatorIndex = argument.indexOf('=');
+  const rawKey = separatorIndex === -1 ? argument : argument.slice(0, separatorIndex);
+  const rawValue = separatorIndex === -1 ? undefined : argument.slice(separatorIndex + 1);
+
+  return [formatKey(rawKey, mode), convertValue(rawValue)];
+};
+
+/**
+ * Builds an object from validated command-line arguments.
  *
- * @example
- * ```js
- * // Simple mode: key=value pairs
- * createObjectFromArguments(['name=John', 'age=30'], 'snakecase');
- * // Returns: { name: 'John', age: 30 }
+ * Repeated keys use the last supplied value. Values are split at the first `=`;
+ * additional separators remain part of the value.
  *
- * // Unix mode: flags and options
- * createObjectFromArguments(['--name=John', '-a'], 'snakecase');
- * // Returns: { name: 'John', a: true }
- * ```
+ * @private
+ * @param {string[]} argumentsv - The validated arguments to process.
+ * @param {CaseMode} mode - The target key casing convention.
+ * @returns {ArgvObject} The parsed argument object.
  */
 const createObjectFromArguments = (argumentsv, mode) => {
-  const entries = [...argumentsv].map(argumentv => {
-    const [k, v] = argumentv.split('=');
-    const key = formatKey(k, mode);
-    const value = convertValue(v);
-    return [key, value];
-  });
-
-  return Object.fromEntries(entries);
+  return Object.fromEntries(argumentsv.map(argument => parseArgument(argument, mode)));
 };
 
 // ━━ EXPORT MODULE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-/**
- * Utility functions for argument processing.
- *
- * @namespace
- * @property {Function} formatKey    - Key formatting/normalization function.
- * @property {Function} convertValue - Value type conversion function.
- */
 export { formatKey, convertValue, createObjectFromArguments };
