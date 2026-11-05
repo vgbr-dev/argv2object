@@ -1,18 +1,20 @@
 /**
- * @file Entry point for ES Module consumers.
+ * @file Entry point for `ES Module` consumers.
  *
- * Provides the default export of argv2object functionality
+ * Provides the default export of `argv2Object` functionality
  * for modern JavaScript environments using ES Modules.
  *
  * This file re-exports the main functionality from the
  * implementation module while maintaining ESM compatibility.
  *
- * @module argv2object/esm
- * @see module:argv2Object
+ * @module argv2Object/esm
+ * @see {@link argv2Object}
  * @since 1.1.0
- * @example
- * // ESM Usage
- * import argv2object from 'argv2object';
+ */
+
+// ━━ TYPE DEFINITIONS ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+/**
+ * @typedef {import('#argv2Object').default} argv2Object
  */
 
 // ━━ IMPORT MODULES ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

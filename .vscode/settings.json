@@ -32,11 +32,11 @@
     "**/.hg": true,
     "**/CVS": true,
     "**/.DS_Store": true,
-    // ".husky": true,
-    // ".github": true,
-    "node_modules": true
+    ".husky": true,
+    ".github": true,
+    "node_modules": true,
 
-    /* » FILES *
+    /* » FILES */
 
     // » Editorconfig Configuration Files
     ".editorconfig": true,
@@ -85,7 +85,7 @@
     "yarn.lock": true,
 
     "README.md": false,
-    "LICENSE{,.md,.txt}": true,
+    "LICENSE{,.md,.txt}": true
     /**/
   },
   "files.associations": {
