@@ -7,9 +7,9 @@
     "allowJs": true,
     "checkJs": true,
     "paths": {
-      "#argv2Object": ["./src/argv2Object.mjs"],
-      "#constants": ["./src/constants.mjs"],
-      "#functions": ["./src/functions.mjs"]
+      "#argv2Object": ["./source/argv2Object.mjs"],
+      "#constants": ["./source/constants.mjs"],
+      "#functions": ["./source/functions.mjs"]
     }
   },
   "include": ["source/**/*"],

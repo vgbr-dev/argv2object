@@ -42,9 +42,9 @@
     "require": "./index.cjs"
   },
   "imports": {
-    "#argv2Object": "./src/argv2Object.mjs",
-    "#constants": "./src/constants.mjs",
-    "#functions": "./src/functions.mjs"
+    "#argv2Object": "./source/argv2Object.mjs",
+    "#constants": "./source/constants.mjs",
+    "#functions": "./source/functions.mjs"
   },
   "scripts": {
     "test": "cross-env NODE_ENV=test node --test test/*.test.mjs",
