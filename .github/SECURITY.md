@@ -2,7 +2,7 @@
 
 ## Reporting a Vulnerability
 
-If you discover a security vulnerability, please send an email to [security@example.com](mailto:security@example.com). Please do not create a GitHub issue for the vulnerability.
+If you discover a security vulnerability, please send an email to [vgbr.dev@gmail.com](mailto:vgbr.dev@gmail.com). Please do not create a GitHub issue for the vulnerability.
 
 To help us triage the issue, please include the following information in your email:
 
@@ -17,10 +17,10 @@ Our security team will review your report and respond as soon as possible to coo
 
 This project is currently supported with security updates for the following versions:
 
-| Version | Supported          |
-|:-------:|-------------------:|
-| 1.x.x   | :white_check_mark: |
-| 0.x.x   | :x:                |
+| Version |          Supported |
+| :-----: | -----------------: |
+|  1.x.x  | :white_check_mark: |
+|  0.x.x  |                :x: |
 
 ## Security Disclosures
 
